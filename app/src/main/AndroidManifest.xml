@@ -10,14 +10,52 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:name=".MonthCalendar"
+            android:label="@string/title_activity_month_calendar"
+            android:parentActivityName=".WeekCalendar"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".RecipeBook"
+            android:label="@string/title_activity_recipe_book"
+            android:parentActivityName=".WeekCalendar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DayView"
+            android:label="@string/title_activity_day_view"
+            android:parentActivityName=".WeekCalendar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MealView"
+            android:label="@string/title_activity_meal_view"
+            android:parentActivityName=".DayView"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddFoodItems"
+            android:label="@string/title_activity_add_food_items"
+            android:parentActivityName=".MealView"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShoppingList"
+            android:label="@string/title_activity_shopping_list"
+            android:parentActivityName=".WeekCalendar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".WeekCalendar"
+            android:label="@string/title_activity_week_calendar"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".basicActivity"
+            android:label="@string/title_activity_basic"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 
