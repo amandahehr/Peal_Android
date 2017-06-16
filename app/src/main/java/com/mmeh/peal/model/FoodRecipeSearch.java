@@ -1,6 +1,14 @@
 package com.mmeh.peal.model;
 
+import android.widget.ArrayAdapter;
+
 public class FoodRecipeSearch {
+
+    public ArrayAdapter listAll() {
+
+
+        return null;
+    }
 
     public static FoodRecipe searchById(String recipeId) {
         // TODO: code this method - searchById

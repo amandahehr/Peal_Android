@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class WeekCalendar extends AppCompatActivity {
@@ -47,4 +48,9 @@ public class WeekCalendar extends AppCompatActivity {
 
     }
 
+    public void goToTestScreen(View view) {
+        Intent intent;
+        intent = new Intent(this, AddFoodItems.class);
+        startActivity(intent);
+    }
 }

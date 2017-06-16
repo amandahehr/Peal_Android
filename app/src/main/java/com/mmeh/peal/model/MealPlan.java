@@ -8,7 +8,7 @@ public class MealPlan {
     public final String LUNCH = "LUNCH";
     public final String DINNER = "DINNER";
 
-    private String dayMealPlanId;
+    private int dayMealPlanId;
     private String dayMealPlanDate;
     private Meal breakfastMeal;
     private Meal lunchMeal;
@@ -20,7 +20,7 @@ public class MealPlan {
         // TODO: complete this constructor
     }
 
-    public MealPlan(String dayMealPlanId, String dayMealPlanDate, Meal breakfastMeal, Meal lunchMeal, Meal dinnerMeal) {
+    public MealPlan(int dayMealPlanId, String dayMealPlanDate, Meal breakfastMeal, Meal lunchMeal, Meal dinnerMeal) {
         this.dayMealPlanId = dayMealPlanId;
         this.dayMealPlanDate = dayMealPlanDate;
         this.breakfastMeal = breakfastMeal;
@@ -28,11 +28,11 @@ public class MealPlan {
         this.dinnerMeal = dinnerMeal;
     }
 
-    public String getDayMealPlanId() {
+    public int getDayMealPlanId() {
         return dayMealPlanId;
     }
 
-    public void setDayMealPlanId(String dayMealPlanId) {
+    public void setDayMealPlanId(int dayMealPlanId) {
         this.dayMealPlanId = dayMealPlanId;
     }
 

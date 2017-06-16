@@ -1,8 +1,12 @@
 package com.mmeh.peal.model;
 
+import android.content.Context;
+
+import com.mmeh.peal.database.DataBaseHelper;
+
 public class FoodItem {
 
-    private String itemId;
+    private int itemId;
     private String itemName;
     private String itemDescription;
     private String itemCategory;
@@ -10,13 +14,14 @@ public class FoodItem {
     private String itemMeasure;
     // TODO: check if there is any other attributes for this class. !ATTENTION! Whenever creating new attributes the constructors and the toString() method must be updated/analysed.
 
+    public FoodItem() {}
 
-    public FoodItem() {
+    public FoodItem(Context context, DataBaseHelper db) {
         // TODO: complete this constructor.
 
     }
 
-    public FoodItem(String itemId, String itemName, String itemDescription, String itemCategory, String itemNDB, String itemMeasure) {
+    public FoodItem(int itemId, String itemName, String itemDescription, String itemCategory, String itemNDB, String itemMeasure) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -25,11 +30,11 @@ public class FoodItem {
         this.itemMeasure = itemMeasure;
     }
 
-    public String getItemId() {
+    public int getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
     }
 

@@ -22,7 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -38,7 +38,17 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/title_activity_week_calendar" />
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/message"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp"
+            android:onClick="goToTestScreen"
+            android:text="Go To Test Screen" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
