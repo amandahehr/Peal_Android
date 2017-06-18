@@ -4,28 +4,38 @@
     android:layout_height="match_parent"
     android:paddingBottom="10dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/foodNameTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:padding="10dp">
+        android:layout_marginTop="10dp"
+        android:text="@string/food_item"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/nameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Food Item"
-            android:textSize="24sp" />
+    <TextView
+        android:id="@+id/foodCategoryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/foodNameTextView"
+        android:layout_alignStart="@+id/foodNameTextView"
+        android:layout_below="@+id/foodNameTextView"
+        android:layout_marginTop="5dp"
+        android:text="@string/food_category"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/measurementText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="measurement"
-            android:textSize="20sp" />
-    </LinearLayout>
+    <!--<TextView-->
+        <!--android:id="@+id/foodMeasureTextView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignBottom="@+id/foodCategoryTextView"-->
+        <!--android:layout_alignTop="@+id/foodCategoryTextView"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_toEndOf="@+id/foodCategoryTextView"-->
+        <!--android:layout_toRightOf="@+id/foodCategoryTextView"-->
+        <!--android:text="@string/food_measure"-->
+        <!--android:textSize="14sp" />-->
 
 </RelativeLayout>

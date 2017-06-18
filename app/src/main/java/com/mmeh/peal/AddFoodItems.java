@@ -1,20 +1,14 @@
 package com.mmeh.peal;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListViewCompat;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,14 +27,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EventListener;
 import java.util.List;
 
 public class AddFoodItems extends AppCompatActivity {
 
+    private final String TAG_SEARCH_MEASURE = "USDAQuery-SearchMeasure";
+    private final String TAG_SEARCH_NAME = "USDAQuery-SearchName";
+
     private List<FoodItem> foodItems;
-    private Context thisContext;
+    private RequestQueue queue;
+
+    private ListView foodItemsListView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -74,50 +71,43 @@ public class AddFoodItems extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        thisContext = this;
+
         foodItems = new ArrayList<>();
-
-        // William - for test
-        String[] items = {"test one", "test two", "test three"};
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<>(this,
-//                        android.R.layout.simple_list_item_1,
-//                        android.R.id.)
-
-
+        queue = Volley.newRequestQueue(this);
+        foodItemsListView = (ListView) findViewById(R.id.foodItemsListView);
     }
 
     public void btnSearchClickEventHandler(View view) {
-//        foodItems = new ArrayList<>();
-//        FoodItem newFood1 = new FoodItem(1, "Item 1", "Desc 1", "Cat 1", "NDB 1", "Measure 1");
-//        foodItems.add(newFood1);
-//        FoodItem newFood2 = new FoodItem(2, "Item 2", "Desc 2", "Cat 2", "NDB 2", "Measure 2");
-//        foodItems.add(newFood2);
-
-
-
         TextView txtSearch = (TextView) findViewById(R.id.txtSearch);
 
+        foodItems.clear();
+        foodItemsListView.setAdapter(null);
 
+        // cancelling all requests about this search if in queue
+        queue.cancelAll(TAG_SEARCH_NAME);
+
+        // first StringRequest: getting items searched
+        StringRequest stringRequest = searchNameStringRequest(txtSearch.getText().toString());
+        stringRequest.setTag(TAG_SEARCH_NAME);
+
+        // executing the request (adding to queue)
+        queue.add(stringRequest);
+
+    }
+
+    private StringRequest searchNameStringRequest(String nameSearch) {
         final String API = "&api_key=HRjlHt125eNuO6a6xE9KqrVKEpjHuAIBZrZhQFBZ";
         final String NAME_SEARCH = "&q=";
         final String DATA_SOURCE = "&ds=Standard Reference";
         final String FOOD_GROUP = "&fg=";
         final String SORT = "&sort=r";
-        final String MAX_ROWS = "&max=50";
+        final String MAX_ROWS = "&max=25";
         final String BEGINNING_ROW = "&offset=0";
         final String URL_PREFIX = "https://api.nal.usda.gov/ndb/search/?format=json";
 
-        final String TAG = "USDAQuery";
+        String url = URL_PREFIX + API + NAME_SEARCH + nameSearch + DATA_SOURCE + FOOD_GROUP + SORT + MAX_ROWS + BEGINNING_ROW;
 
-        String url = URL_PREFIX + API + NAME_SEARCH + txtSearch.getText() + DATA_SOURCE + FOOD_GROUP + SORT + MAX_ROWS + BEGINNING_ROW;
-
-        foodItems.clear();
-
-        RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        queue.cancelAll(TAG);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        return new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -126,42 +116,105 @@ public class AddFoodItems extends AppCompatActivity {
                             int maxItems = result.getInt("end");
                             JSONArray resultList = result.getJSONArray("item");
 
-                            // TODO: filter this list. Apparently it is showing non necessary groups.
                             for (int i = 0; i < maxItems; i++) {
                                 FoodItem fi = new FoodItem(
                                         0,
-                                        resultList.getJSONObject(i).getString("name"),
-                                        resultList.getJSONObject(i).getString("name"),
-                                        resultList.getJSONObject(i).getString("group"),
-                                        resultList.getJSONObject(i).getString("ndbno"),
+                                        resultList.getJSONObject(i).getString("name").trim(),
+                                        "",
+                                        resultList.getJSONObject(i).getString("group").trim(),
+                                        resultList.getJSONObject(i).getString("ndbno").trim(),
                                         ""
                                 );
                                 foodItems.add(fi);
                             }
 
+                            showListOfItems();
 
                         } catch (JSONException e) {
+                            Toast.makeText(AddFoodItems.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
-                        FoodItemListAdapter adapter = new FoodItemListAdapter(
-                                thisContext, R.layout.list_food_item, foodItems
-                        );
-
-                        ListView lv = (ListView) findViewById(R.id.listView);
-                        lv.setAdapter(adapter);
-                    }
-                },
+                    } // public void onResponse(String response)
+                }, // Response.Listener<String>()
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: if the user keeps typing this message will also keep showing
-                        Toast.makeText(thisContext, "Food source is not responding (USDA API)", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddFoodItems.this, "Food source is not responding (USDA API)", Toast.LENGTH_LONG).show();
                     }
                 });
-        stringRequest.setTag(TAG);
+    }
 
-        // executing the request (adding to queue)
-        queue.add(stringRequest);
+    private void showListOfItems() {
+        FoodItemListAdapter adapter = new FoodItemListAdapter(
+                AddFoodItems.this, R.layout.list_food_item, foodItems
+        );
 
+        foodItemsListView.setAdapter(adapter);
+
+        foodItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Intent intent;
+
+
+                // cancelling all requests about this search if in queue
+                queue.cancelAll(TAG_SEARCH_MEASURE);
+                // StringRequest: getting measure of the items
+                // on the return of the request, go back to the caller Activity
+                StringRequest stringRequest = searchItemMeasureStringRequest(foodItems.get(position).getItemNDB(), position);
+                stringRequest.setTag(TAG_SEARCH_MEASURE);
+
+                // executing the request (adding to queue)
+                queue.add(stringRequest);
+            }
+        });
+    }
+
+    private StringRequest searchItemMeasureStringRequest(String ndbno, final int index) {
+
+        //  StringRequest: getting measure of the items
+        final String API = "&api_key=HRjlHt125eNuO6a6xE9KqrVKEpjHuAIBZrZhQFBZ";
+        final String NUTRIENTS = "&nutrients=208";
+        final String NDBNO = "&ndbno=" + ndbno;
+        final String URL_PREFIX = "https://api.nal.usda.gov/ndb/nutrients/?format=json";
+
+        String url = URL_PREFIX + API + NUTRIENTS + NDBNO;
+
+        return new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject result = new JSONObject(response).
+                                    getJSONObject("report").
+                                    getJSONArray("foods").
+                                    getJSONObject(0);
+                            String measure = result.getString("measure").toLowerCase() +
+                                    " / " + String.valueOf(result.getLong("weight")) +
+                                    "g";
+                            foodItems.get(index).setItemMeasure(measure);
+
+                        } catch (JSONException e) {
+                            Toast.makeText(AddFoodItems.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+
+                        finishMyActivity(index);
+
+                    } // public void onResponse(String response)
+                }, // Response.Listener<String>()
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AddFoodItems.this, "Food source is not responding (USDA API). Result is not complete.", Toast.LENGTH_LONG).show();
+                        finishMyActivity(index);
+                    }
+                }); // Response.ErrorListener()
+    }
+
+    private void finishMyActivity(int index) {
+        Intent data = new Intent();
+        data.putExtra(MealView.RETURN_MESSAGE, foodItems.get(index).toString());
+        setResult(RESULT_OK, data);
+        finish();
     }
 }

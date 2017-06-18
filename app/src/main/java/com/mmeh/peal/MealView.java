@@ -12,7 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.mmeh.peal.model.FoodItem;
+
 public class MealView extends AppCompatActivity {
+
+    private static final int FOOD_ITEM_REQUEST = 1111;
+    public static final String RETURN_MESSAGE = "RETURN_MESSAGE";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,4 +55,20 @@ public class MealView extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FOOD_ITEM_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String message = data.getStringExtra(RETURN_MESSAGE);
+                TextView tv = (TextView) findViewById(R.id.returnTextView);
+                tv.setText(message);
+            }
+        }
+    }
+
+    public void btnAddItemClickEventHandler(View view) {
+        Intent intent = new Intent(view.getContext(), AddFoodItems.class);
+
+        startActivityForResult(intent, FOOD_ITEM_REQUEST);
+    }
 }

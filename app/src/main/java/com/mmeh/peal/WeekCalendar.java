@@ -50,7 +50,7 @@ public class WeekCalendar extends AppCompatActivity {
 
     public void goToTestScreen(View view) {
         Intent intent;
-        intent = new Intent(this, AddFoodItems.class);
+        intent = new Intent(this, MealView.class);
         startActivity(intent);
     }
 }

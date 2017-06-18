@@ -35,10 +35,13 @@ public class FoodItemListAdapter extends ArrayAdapter<FoodItem>{
 
         FoodItem foodItem = foodItems.get(position);
 
-        TextView nameText = (TextView) convertView.findViewById(R.id.nameText);
-        nameText.setText(foodItem.getItemName());
-        TextView measurementText = (TextView) convertView.findViewById(R.id.measurementText);
-        measurementText.setText(foodItem.getItemMeasure());
+        TextView foodNameTextView = (TextView) convertView.findViewById(R.id.foodNameTextView);
+        foodNameTextView.setText(foodItem.getItemName());
+        TextView foodCategoryTextView = (TextView) convertView.findViewById(R.id.foodCategoryTextView);
+        foodCategoryTextView.setText(foodItem.getItemCategory());
+//        TextView foodMeasureTextView = (TextView) convertView.findViewById(R.id.foodMeasureTextView);
+//        String measure = (foodItem.getItemMeasure().length() == 0 ? "" : "(" + foodItem.getItemMeasure() + ")");
+//        foodMeasureTextView.setText(measure);
 
         return convertView;
     }

@@ -12,4 +12,7 @@
     <string name="title_recipes">Recipes</string>
     <string name="title_activity_week_calendar">WeekCalendar</string>
     <string name="title_activity_basic">basicActivity</string>
+    <string name="food_item">Food Item</string>
+    <string name="food_category">Food Category</string>
+    <string name="food_measure">Food Measure</string>
 </resources>
