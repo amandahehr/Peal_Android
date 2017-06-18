@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class FoodRecipe {
 
-    private String recipeId;
+    private int recipeId;
     private String recipeName;
     private String recipeDescription;
     private ArrayList<FoodItem> foodItems;
@@ -17,7 +17,7 @@ public class FoodRecipe {
 
     }
 
-    public FoodRecipe(String recipeId, String recipeName, String recipeDescription, ArrayList<FoodItem> foodItems, String recipeInstructions) {
+    public FoodRecipe(int recipeId, String recipeName, String recipeDescription, ArrayList<FoodItem> foodItems, String recipeInstructions) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.recipeDescription = recipeDescription;
@@ -25,11 +25,11 @@ public class FoodRecipe {
         this.recipeInstructions = recipeInstructions;
     }
 
-    public String getRecipeId() {
+    public int getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(String recipeId) {
+    public void setRecipeId(int recipeId) {
         this.recipeId = recipeId;
     }
 

@@ -39,9 +39,6 @@ public class FoodItemListAdapter extends ArrayAdapter<FoodItem>{
         foodNameTextView.setText(foodItem.getItemName());
         TextView foodCategoryTextView = (TextView) convertView.findViewById(R.id.foodCategoryTextView);
         foodCategoryTextView.setText(foodItem.getItemCategory());
-//        TextView foodMeasureTextView = (TextView) convertView.findViewById(R.id.foodMeasureTextView);
-//        String measure = (foodItem.getItemMeasure().length() == 0 ? "" : "(" + foodItem.getItemMeasure() + ")");
-//        foodMeasureTextView.setText(measure);
 
         return convertView;
     }
