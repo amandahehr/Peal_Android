@@ -39,6 +39,10 @@ public class DayView extends AppCompatActivity {
 
     };
 
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,12 @@ public class DayView extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        Bundle bundle = getIntent().getExtras();
+        String month = bundle.getString("Month");
+        String day = bundle.getString("Day");
+
+        TextView dayText = (TextView)findViewById(R.id.message);
+        dayText.setText(month + " " + day);
 
     }
 

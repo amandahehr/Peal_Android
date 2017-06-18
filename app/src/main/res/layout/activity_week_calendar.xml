@@ -48,6 +48,81 @@
             android:onClick="goToTestScreen"
             android:text="Go To Test Screen" />
 
+        <Button
+            android:id="@+id/day1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/day4"
+            android:layout_alignLeft="@+id/day3"
+            android:layout_alignStart="@+id/day3"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/day3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/day6"
+            android:layout_alignLeft="@+id/day5"
+            android:layout_alignStart="@+id/day5"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/day4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/day6"
+            android:layout_toEndOf="@+id/day3"
+            android:layout_toRightOf="@+id/day3"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/day5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="57dp"
+            android:layout_toLeftOf="@+id/day6"
+            android:layout_toStartOf="@+id/day6"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/day6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/day5"
+            android:layout_alignBottom="@+id/day5"
+            android:layout_alignEnd="@+id/button2"
+            android:layout_alignRight="@+id/button2"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/day2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/day1"
+            android:layout_alignBottom="@+id/day1"
+            android:layout_toEndOf="@+id/day1"
+            android:layout_toRightOf="@+id/day1"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/day0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/day2"
+            android:layout_toEndOf="@+id/day1"
+            android:layout_toRightOf="@+id/day1"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/nextWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/day1"
+            android:layout_alignStart="@+id/day1"
+            android:layout_alignTop="@+id/day0"
+            android:text="@string/next_week" />
+
     </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
