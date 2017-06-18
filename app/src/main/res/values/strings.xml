@@ -15,5 +15,6 @@
     <string name="food_item">Food Item</string>
     <string name="food_category">Food Category</string>
     <string name="food_measure">Food Measure</string>
+    <string name="next_week">Next Week</string>
     <string name="search">Search...</string>
 </resources>
