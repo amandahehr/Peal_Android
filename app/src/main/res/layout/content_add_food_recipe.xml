@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:scrollbars="vertical"
+    tools:context="com.mmeh.peal.AddFoodRecipe">
+
+    <EditText
+        android:id="@+id/food_recipe_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:ems="10"
+        android:hint="@string/new_food_recipe"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textSize="@dimen/header_h1_font_size" />
+
+    <RelativeLayout
+        android:id="@+id/container_food_items_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/food_recipe_name_edit_text"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorBackgroundForm"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/label_food_items_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="Food Items"
+            android:textSize="@dimen/header_h2_font_size" />
+
+        <Button
+            android:id="@+id/add_food_item_on_recipe_button"
+            android:layout_width="@dimen/icon_size_small"
+            android:layout_height="@dimen/icon_size_small"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/ic_add"
+            android:onClick="addFoodItemOnRecipeClickEventHandler" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list_food_items_on_recipe_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container_food_items_relative_layout"
+        android:layout_centerHorizontal="true"
+        android:minHeight="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_food_items_on_recipe_list_view"
+        android:background="@color/colorBackgroundForm"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/label_instructions_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/instructions"
+            android:textSize="@dimen/header_h2_font_size" />
+
+        <EditText
+            android:id="@+id/food_recipe_instructions_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+    </LinearLayout>
+</RelativeLayout>

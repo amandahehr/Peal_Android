@@ -2,7 +2,6 @@ package com.mmeh.peal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mmeh.peal.model.FoodItem;
-import com.mmeh.peal.model.FoodItemListAdapter;
+import com.mmeh.peal.list_adapters.FoodItemListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +37,10 @@ public class AddFoodItems extends AppCompatActivity {
     private RequestQueue queue;
 
     private ListView foodItemsListView;
+
+    public static final String FROM_WHAT_SCREEN = "FROM_WHAT_SCREEN";
+    public static final int SCREEN_ADD_FOOD_RECIPE = 1;
+    private int fromWhatScreen;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,6 +78,14 @@ public class AddFoodItems extends AppCompatActivity {
         foodItems = new ArrayList<>();
         queue = Volley.newRequestQueue(this);
         foodItemsListView = (ListView) findViewById(R.id.foodItemsListView);
+
+        Bundle b = getIntent().getExtras();
+        try {
+            fromWhatScreen = b.getInt(FROM_WHAT_SCREEN);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error on get bundle (previous screen)", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void btnSearchClickEventHandler(View view) {
@@ -198,7 +209,7 @@ public class AddFoodItems extends AppCompatActivity {
                             Toast.makeText(AddFoodItems.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
-                        finishMyActivity(index);
+                        finishMyActivityOk(index);
 
                     } // public void onResponse(String response)
                 }, // Response.Listener<String>()
@@ -206,14 +217,21 @@ public class AddFoodItems extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(AddFoodItems.this, "Food source is not responding (USDA API). Result is not complete.", Toast.LENGTH_LONG).show();
-                        finishMyActivity(index);
+                        finishMyActivityOk(index);
                     }
                 }); // Response.ErrorListener()
     }
 
-    private void finishMyActivity(int index) {
+    private void finishMyActivityOk(int index) {
         Intent data = new Intent();
-        data.putExtra(MealView.RETURN_MESSAGE, foodItems.get(index).toString());
+        if (fromWhatScreen == SCREEN_ADD_FOOD_RECIPE) {
+            data.putExtra(AddFoodRecipe.RETURN_FOOD_NAME, foodItems.get(index).getItemName());
+            data.putExtra(AddFoodRecipe.RETURN_FOOD_CATEGORY, foodItems.get(index).getItemCategory());
+            data.putExtra(AddFoodRecipe.RETURN_FOOD_NDB, foodItems.get(index).getItemNDB());
+            data.putExtra(AddFoodRecipe.RETURN_FOOD_MEASURE, foodItems.get(index).getItemMeasure());
+        } else {
+            data.putExtra(MealView.RETURN_MESSAGE, foodItems.get(index).toString());
+        }
         setResult(RESULT_OK, data);
         finish();
     }

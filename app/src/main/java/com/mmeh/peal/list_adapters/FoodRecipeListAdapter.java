@@ -1,4 +1,4 @@
-package com.mmeh.peal.model;
+package com.mmeh.peal.list_adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mmeh.peal.R;
+import com.mmeh.peal.model.FoodRecipe;
 
 import java.util.List;
 

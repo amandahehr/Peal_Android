@@ -16,7 +16,7 @@ import com.mmeh.peal.model.FoodItem;
 
 public class MealView extends AppCompatActivity {
 
-    private static final int FOOD_ITEM_REQUEST = 1111;
+    private static final int FOOD_ITEM_REQUEST = 111;
     public static final String RETURN_MESSAGE = "RETURN_MESSAGE";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

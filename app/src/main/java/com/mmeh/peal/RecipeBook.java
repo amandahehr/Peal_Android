@@ -6,25 +6,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.mmeh.peal.database.DataBaseHelper;
-import com.mmeh.peal.database.FoodItemContract;
 import com.mmeh.peal.database.FoodRecipeContract;
 import com.mmeh.peal.model.FoodRecipe;
-import com.mmeh.peal.model.FoodRecipeListAdapter;
+import com.mmeh.peal.list_adapters.FoodRecipeListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeBook extends AppCompatActivity {
+
+    private static final int NEW_FOOD_RECIPE_REQUEST = 100;
+    private static final int EDIT_FOOD_RECIPE_REQUEST = 200;
+    public static final String FOOD_RECIPE_ID = "FOOD_RECIPE_ID";
 
     DataBaseHelper myDbHelper;
     List<FoodRecipe> foodRecipes;
@@ -79,6 +78,18 @@ public class RecipeBook extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case NEW_FOOD_RECIPE_REQUEST:
+                break;
+            case EDIT_FOOD_RECIPE_REQUEST:
+                break;
+            default:
+                break;
+        }
+    }
+
     private void loadAllRecipes() {
         SQLiteDatabase db = myDbHelper.getReadableDatabase();
 
@@ -116,5 +127,11 @@ public class RecipeBook extends AppCompatActivity {
 
         recipesListView.setAdapter(adapter);
 
+    }
+
+    public void addRecipeButtonClickEventHandler(View view) {
+        Intent intent = new Intent(this, AddFoodRecipe.class);
+        intent.putExtra(FOOD_RECIPE_ID, 0);
+        startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);
     }
 }
