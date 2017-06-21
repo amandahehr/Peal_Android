@@ -29,7 +29,7 @@ public class MealView extends AppCompatActivity {
             int itemId = item.getItemId();
             switch (item.getItemId()) {
                 case R.id.navigation_calendar:
-                    intent = new Intent(findViewById(itemId).getContext(), MonthCalendar.class);
+                    intent = new Intent(findViewById(itemId).getContext(),  WeekCalendar.class);
                     break;
                 case R.id.navigation_recipes:
                     intent = new Intent(findViewById(itemId).getContext(), RecipeBook.class);

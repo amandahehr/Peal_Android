@@ -5,132 +5,171 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     tools:context="com.mmeh.peal.WeekCalendar">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
+    <android.support.percent.PercentRelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/title_activity_week_calendar" />
-
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/nextWeek"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/message"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="23dp"
-            android:onClick="goToTestScreen"
-            android:text="Go To Test Screen" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/toolbar"
+            android:layout_margin="0dp"
+            android:background="@color/colorPrimary"
+            android:padding="0dp"
+            android:text="@string/next_week"
+            android:textColor="@color/colorBackgroundForm"
+            android:textSize="@dimen/week_cal_font_size_large"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%"
+            tools:layout_marginBottom="0dp" />
+
+        <Button
+            android:id="@+id/day0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_toRightOf="@+id/nextWeek"
+            android:background="@drawable/round_button"
+            android:text="Button"
+            android:textSize="@dimen/week_cal_font_size"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/day0_circle"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="120dp"-->
+            <!--android:layout_alignCenter="@+id/day0"-->
+            <!--android:layout_alignTop="@+id/day0"-->
+            <!--android:layout_alignBottom="@+id/day0"-->
+            <!--android:layout_alignLeft="@+id/day0"-->
+            <!--android:layout_alignRight="@+id/day0"-->
+            <!--android:background="@drawable/circle"-->
+            <!--android:gravity="center"-->
+            <!--android:text="01\nMON"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:textSize="10dp" />-->
 
         <Button
             android:id="@+id/day1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/day4"
-            android:layout_alignLeft="@+id/day3"
-            android:layout_alignStart="@+id/day3"
-            android:text="Button" />
+            android:layout_below="@+id/nextWeek"
+            android:background="@drawable/round_button"
+            android:text="Button"
+            android:textSize="@dimen/week_cal_font_size"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%" />
+
+        <Button
+            android:id="@+id/day2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/day0"
+            android:layout_toRightOf="@+id/day1"
+            android:background="@drawable/round_button_dark"
+            android:text="Button"
+            android:textSize="@dimen/week_cal_font_size"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%" />
 
         <Button
             android:id="@+id/day3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/day6"
-            android:layout_alignLeft="@+id/day5"
-            android:layout_alignStart="@+id/day5"
-            android:text="Button" />
+            android:layout_below="@+id/day1"
+            android:background="@drawable/round_button_dark"
+            android:text="Button"
+            android:textSize="@dimen/week_cal_font_size"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%" />
 
         <Button
             android:id="@+id/day4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/day6"
-            android:layout_toEndOf="@+id/day3"
-            android:layout_toRightOf="@+id/day3"
-            android:text="Button" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/day1"
+            android:background="@drawable/round_button"
+            android:text="Button"
+            android:textSize="@dimen/week_cal_font_size"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%" />
 
         <Button
             android:id="@+id/day5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="57dp"
-            android:layout_toLeftOf="@+id/day6"
-            android:layout_toStartOf="@+id/day6"
-            android:text="Button" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/round_button"
+            android:text="Button"
+            android:textSize="@dimen/week_cal_font_size"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%" />
 
         <Button
             android:id="@+id/day6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/day5"
-            android:layout_alignBottom="@+id/day5"
-            android:layout_alignEnd="@+id/button2"
-            android:layout_alignRight="@+id/button2"
-            android:text="Button" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/round_button_dark"
+            android:text="Button"
+            android:textSize="@dimen/week_cal_font_size"
+            app:layout_heightPercent="22.5%"
+            app:layout_widthPercent="50%" />
 
-        <Button
-            android:id="@+id/day2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/day1"
-            android:layout_alignBottom="@+id/day1"
-            android:layout_toEndOf="@+id/day1"
-            android:layout_toRightOf="@+id/day1"
-            android:text="Button" />
 
-        <Button
-            android:id="@+id/day0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/day2"
-            android:layout_toEndOf="@+id/day1"
-            android:layout_toRightOf="@+id/day1"
-            android:text="Button" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimaryDark"
+            app:layout_heightPercent="10%"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <Button
-            android:id="@+id/nextWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/day1"
-            android:layout_alignStart="@+id/day1"
-            android:layout_alignTop="@+id/day0"
-            android:text="@string/next_week" />
+        <!--<Button-->
+        <!--android:id="@+id/button2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="goToTestScreen"-->
+        <!--android:text="Go To Test Screen" />-->
 
-    </RelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/navigation" />
 
 </LinearLayout>

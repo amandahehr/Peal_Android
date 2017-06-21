@@ -24,12 +24,14 @@
 
     <include layout="@layout/content_add_food_items" />
 
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/navigation" />
-
 </LinearLayout>

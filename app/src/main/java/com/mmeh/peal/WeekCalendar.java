@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.icu.util.Calendar;
 
@@ -33,7 +34,7 @@ public class WeekCalendar extends AppCompatActivity {
             int itemId = item.getItemId();
             switch (item.getItemId()) {
                 case R.id.navigation_calendar:
-                    intent = new Intent(findViewById(itemId).getContext(), MonthCalendar.class);
+                    intent = new Intent(findViewById(itemId).getContext(), WeekCalendar.class);
                     break;
                 case R.id.navigation_recipes:
                     intent = new Intent(findViewById(itemId).getContext(), RecipeBook.class);
@@ -57,6 +58,8 @@ public class WeekCalendar extends AppCompatActivity {
 
     public void setWeekDays(int week){
 
+
+
         DateFormat format = new SimpleDateFormat("dd");
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.SUNDAY);
@@ -71,23 +74,47 @@ public class WeekCalendar extends AppCompatActivity {
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
         final String month_name = month_date.format(calendar.getTime());
 
+        Calendar currentDay = Calendar.getInstance();
+        String currentDate = format.format(currentDay.getTime());
+        Log.d("test", currentDate);
 
         Button month = (Button)findViewById(R.id.nextWeek);
         month.setText(month_name);
         Button day_0 = (Button)findViewById(R.id.day0);
-        day_0.setText(days[0]);
+        day_0.setText(days[0] + "\nSUN");
+        if(days[0].equals(currentDate)){
+            day_0.setBackgroundResource(R.drawable.round_button_current_day_dark);
+        }
         Button day_1 = (Button)findViewById(R.id.day1);
-        day_1.setText(days[1]);
+        day_1.setText(days[1]+ "\nMON");
+        if(days[1].equals(currentDate)){
+            day_1.setBackgroundResource(R.drawable.round_button_current_day_dark);
+        }
         Button day_2 = (Button)findViewById(R.id.day2);
-        day_2.setText(days[2]);
+        day_2.setText(days[2]+ "\nTUE");
+        if(days[2].equals(currentDate)){
+            day_2.setBackgroundResource(R.drawable.round_button_current_day);
+        }
         Button day_3 = (Button)findViewById(R.id.day3);
-        day_3.setText(days[3]);
+        day_3.setText(days[3]+ "\nWED");
+        if(days[3].equals(currentDate)){
+            day_3.setBackgroundResource(R.drawable.round_button_current_day);
+        }
         Button day_4 = (Button)findViewById(R.id.day4);
-        day_4.setText(days[4]);
+        day_4.setText(days[4]+ "\nTHU");
+        if(days[4].equals(currentDate)){
+            day_4.setBackgroundResource(R.drawable.round_button_current_day_dark);
+        }
         Button day_5 = (Button)findViewById(R.id.day5);
-        day_5.setText(days[5]);
+        day_5.setText(days[5]+ "\nFRI");
+        if(days[5].equals(currentDate)){
+            day_5.setBackgroundResource(R.drawable.round_button_current_day_dark);
+        }
         Button day_6 = (Button)findViewById(R.id.day6);
-        day_6.setText(days[6]);
+        day_6.setText(days[6]+ "\nSAT");
+        if(days[6].equals(currentDate)){
+            day_6.setBackgroundResource(R.drawable.round_button_current_day);
+        }
 
         day_0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +159,8 @@ public class WeekCalendar extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     public int nextWeek(int currentWeek){
@@ -153,6 +182,26 @@ public class WeekCalendar extends AppCompatActivity {
         int currentWeek = getWeek();
         setWeekDays(currentWeek);
 
+        Log.v("testi", "testiii");
+
+
+//        Button b=(Button) findViewById(R.id.nextWeek);
+//        setButtonSize(b);
+//        b=(Button) findViewById(R.id.day0);
+//        setButtonSize(b);
+//        b=(Button) findViewById(R.id.day1);
+//        setButtonSize(b);
+//        b=(Button) findViewById(R.id.day2);
+//        setButtonSize(b);
+//        b=(Button) findViewById(R.id.day3);
+//        setButtonSize(b);
+//        b=(Button) findViewById(R.id.day4);
+//        setButtonSize(b);
+//        b=(Button) findViewById(R.id.day5);
+//        setButtonSize(b);
+//        b=(Button) findViewById(R.id.day6);
+//        setButtonSize(b);
+
     }
 
     public void goToTestScreen(View view) {
@@ -167,6 +216,12 @@ public class WeekCalendar extends AppCompatActivity {
         intent.putExtra("Month", month);
         intent.putExtra("Day", day);
         startActivity(intent);
+    }
+
+    public void setButtonSize(Button b){
+        int width = getResources().getDisplayMetrics().widthPixels/3;
+        int hei=getResources().getDisplayMetrics().heightPixels/3;
+        b.setLayoutParams(new RelativeLayout.LayoutParams(width,hei));
     }
 
 

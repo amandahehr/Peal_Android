@@ -22,14 +22,22 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_recipe_book"/>
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <include layout="@layout/content_recipe_book"/>
+    </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/navigation" />
 
 </LinearLayout>

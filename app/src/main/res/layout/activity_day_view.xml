@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -28,24 +28,142 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/message"
+        <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/title_activity_day_view" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:padding="@dimen/header_h1_font_size"
+                android:text="@string/title_activity_day_view"
+                android:textAlignment="center"
+                android:textColor="@color/colorBackgroundForm"
+                android:textSize="30sp"
+                app:layout_heightPercent="25%"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/breakfast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/message"
+                android:background="@color/colorPrimary"
+                android:text="Breakfast"
+                android:textColor="@color/colorBackgroundForm"
+                android:textSize="@dimen/header_h2_font_size"
+                app:layout_heightPercent="10%"
+                android:gravity="center"
+                android:textAlignment="viewStart"
+                android:paddingLeft="10sp"/>
+
+            <ScrollView
+                android:id="@+id/breakfastScroll"
+                android:layout_width="match_parent"
+                android:layout_height="58sp"
+                app:layout_heightPercent="15%"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/breakfast">
+
+                <TextView
+                    android:id="@+id/breakfastMeals"
+                    android:layout_width="match_parent"
+                    android:layout_height="24sp"
+                    android:text="Avocado Toast\n\nOrange Juice"
+                    android:textSize="@dimen/normal_text_font_size"
+                    android:paddingLeft="10sp"/>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/lunch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Lunch"
+                android:textColor="@color/colorBackgroundForm"
+                android:textSize="@dimen/header_h2_font_size"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/breakfastScroll"
+                app:layout_heightPercent="10%"
+                android:gravity="center"
+                android:textAlignment="viewStart"
+                android:paddingLeft="10sp"/>
+            <ScrollView
+                android:id="@+id/lunchScroll"
+                android:layout_width="match_parent"
+                android:layout_height="58sp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/lunch"
+                app:layout_heightPercent="15%">
+
+                <TextView
+                    android:id="@+id/lunchMeals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dynamite Roll\n\nSalmon Sashimi\n\nGreen Salad"
+                    android:textSize="@dimen/normal_text_font_size"
+                    android:layout_below="@+id/dinner"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingLeft="10sp"/>
+
+            </ScrollView>
+            <TextView
+                android:id="@+id/dinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Dinner"
+                android:textColor="@color/colorBackgroundForm"
+                android:textSize="@dimen/header_h2_font_size"
+                android:layout_below="@+id/lunchScroll"
+                android:layout_alignParentLeft="true"
+                app:layout_heightPercent="10%"
+                android:gravity="center"
+                android:textAlignment="viewStart"
+                android:paddingLeft="10sp"/>
+            <ScrollView
+                android:id="@+id/dinnerScroll"
+                android:layout_width="match_parent"
+                android:layout_height="58sp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/dinner"
+                app:layout_heightPercent="15%">
+
+                <TextView
+                    android:id="@+id/dinnerMeals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Stir Fry\n\nGreen Salad\n\nMilk"
+                    android:textSize="@dimen/normal_text_font_size"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingLeft="10sp"/>
+
+            </ScrollView>
+
+
+
+
+
+
+        </android.support.percent.PercentRelativeLayout>
 
     </FrameLayout>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/colorPrimary"
+        app:itemTextColor="@color/colorPrimary"
         app:menu="@menu/navigation" />
 
 </LinearLayout>
