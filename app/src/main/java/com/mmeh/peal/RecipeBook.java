@@ -27,6 +27,7 @@ public class RecipeBook extends AppCompatActivity {
 
     DataBaseHelper myDbHelper;
     List<FoodRecipe> foodRecipes;
+    FoodRecipeListAdapter adapter;
 
     ListView recipesListView;
 
@@ -67,9 +68,13 @@ public class RecipeBook extends AppCompatActivity {
 
         myDbHelper = new DataBaseHelper(this);
         foodRecipes = new ArrayList<>();
-        loadAllRecipes();
-        showRecipes();
+        adapter = new FoodRecipeListAdapter(
+                RecipeBook.this, R.layout.list_food_recipe, foodRecipes
+        );
+        recipesListView.setAdapter(adapter);
 
+        loadAllRecipes();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -82,6 +87,8 @@ public class RecipeBook extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case NEW_FOOD_RECIPE_REQUEST:
+                loadAllRecipes();
+                adapter.notifyDataSetChanged();
                 break;
             case EDIT_FOOD_RECIPE_REQUEST:
                 break;
@@ -115,18 +122,9 @@ public class RecipeBook extends AppCompatActivity {
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(FoodRecipeContract.FoodRecipeEntry._ID));
             String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeContract.FoodRecipeEntry.COLUMN_NAME_NAME));
-            foodRecipes.add(new FoodRecipe(itemId, itemName, "", null, ""));
+            foodRecipes.add(new FoodRecipe(itemName, null, ""));
         }
         cursor.close();
-    }
-
-    private void showRecipes() {
-        FoodRecipeListAdapter adapter = new FoodRecipeListAdapter(
-                RecipeBook.this, R.layout.list_food_recipe, foodRecipes
-        );
-
-        recipesListView.setAdapter(adapter);
-
     }
 
     public void addRecipeButtonClickEventHandler(View view) {

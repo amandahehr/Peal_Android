@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mmeh.peal.R;
@@ -39,6 +40,8 @@ public class FoodItemOnRecipeListAdapter extends ArrayAdapter<FoodItem> {
         foodNameTextView.setText(foodItem.getItemName());
         TextView foodMeasureTextView = (TextView) convertView.findViewById(R.id.food_measure_text_view);
         foodMeasureTextView.setText(foodItem.getItemMeasure());
+        EditText quantityEditText = (EditText) convertView.findViewById(R.id.quantity_edit_text);
+        quantityEditText.setText(String.valueOf(foodItem.getItemQuantity()));
         Button btnRemove = (Button) convertView.findViewById(R.id.remove_item_button);
         btnRemove.setTag(String.valueOf(position));
 

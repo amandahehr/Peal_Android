@@ -8,7 +8,8 @@
     <dimen name="header_h1_font_size">22sp</dimen>
     <dimen name="header_h2_font_size">20sp</dimen>
     <dimen name="header_h3_font_size">18sp</dimen>
-    <dimen name="normal_text_font_size">18sp</dimen>
+    <dimen name="normal_text_font_size">16sp</dimen>
+    <dimen name="small_text_font_size">14sp</dimen>
     <dimen name="week_cal_font_size">24sp</dimen>
     <dimen name="week_cal_font_size_large">30sp</dimen>
 

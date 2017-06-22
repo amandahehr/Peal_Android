@@ -129,9 +129,7 @@ public class AddFoodItems extends AppCompatActivity {
 
                             for (int i = 0; i < maxItems; i++) {
                                 FoodItem fi = new FoodItem(
-                                        0,
                                         resultList.getJSONObject(i).getString("name").trim(),
-                                        "",
                                         resultList.getJSONObject(i).getString("group").trim(),
                                         resultList.getJSONObject(i).getString("ndbno").trim(),
                                         ""

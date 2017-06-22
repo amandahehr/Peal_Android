@@ -145,8 +145,6 @@ public class FoodItemSearch {
                             dropList = new String[maxItems];
                             for (int i = 0; i < maxItems; i++) {
                                 FoodItem fi = new FoodItem(
-                                        0,
-                                        resultList.getJSONObject(i).getString("name"),
                                         resultList.getJSONObject(i).getString("name"),
                                         resultList.getJSONObject(i).getString("group"),
                                         resultList.getJSONObject(i).getString("ndbno"),

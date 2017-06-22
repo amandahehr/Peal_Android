@@ -6,36 +6,28 @@ import com.mmeh.peal.database.DataBaseHelper;
 
 public class FoodItem {
 
-    private int itemId;
     private String itemName;
-    private String itemDescription;
     private String itemCategory;
     private String itemNDB; // primary key on https://ndb.nal.usda.gov/ndb/
     private String itemMeasure;
-    // TODO: check if there is any other attributes for this class. !ATTENTION! Whenever creating new attributes the constructors and the toString() method must be updated/analysed.
+    private float itemQuantity;
 
     public FoodItem() {}
 
-    public FoodItem(Context context, DataBaseHelper db) {
-        // TODO: complete this constructor.
-
-    }
-
-    public FoodItem(int itemId, String itemName, String itemDescription, String itemCategory, String itemNDB, String itemMeasure) {
-        this.itemId = itemId;
+    public FoodItem(String itemName, String itemCategory, String itemNDB, String itemMeasure) {
         this.itemName = itemName;
-        this.itemDescription = itemDescription;
         this.itemCategory = itemCategory;
         this.itemNDB = itemNDB;
         this.itemMeasure = itemMeasure;
+        this.itemQuantity = (float) 1;
     }
 
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public FoodItem(String itemName, String itemCategory, String itemNDB, String itemMeasure, float itemQuantity) {
+        this.itemName = itemName;
+        this.itemCategory = itemCategory;
+        this.itemNDB = itemNDB;
+        this.itemMeasure = itemMeasure;
+        this.itemQuantity = itemQuantity;
     }
 
     public String getItemName() {
@@ -44,14 +36,6 @@ public class FoodItem {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
-    }
-
-    public String getItemDescription() {
-        return itemDescription;
-    }
-
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
     }
 
     public String getItemCategory() {
@@ -78,15 +62,22 @@ public class FoodItem {
         this.itemMeasure = itemMeasure;
     }
 
+    public float getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public void setItemQuantity(float itemQuantity) {
+        this.itemQuantity = itemQuantity;
+    }
+
     @Override
     public String toString() {
         return "FoodItem{" +
-                "itemId='" + itemId + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", itemDescription='" + itemDescription + '\'' +
+                "itemName='" + itemName + '\'' +
                 ", itemCategory='" + itemCategory + '\'' +
                 ", itemNDB='" + itemNDB + '\'' +
                 ", itemMeasure='" + itemMeasure + '\'' +
+                ", itemQuantity=" + itemQuantity +
                 '}';
     }
 

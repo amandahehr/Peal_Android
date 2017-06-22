@@ -30,7 +30,7 @@ public class FoodRecipeListAdapter extends ArrayAdapter<FoodRecipe> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_food_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_food_recipe, parent, false);
         }
 
         FoodRecipe foodRecipe = foodRecipes.get(position);
@@ -43,7 +43,7 @@ public class FoodRecipeListAdapter extends ArrayAdapter<FoodRecipe> {
             if (foodRecipes.get(position-1).getRecipeName().substring(0, 0) != foodRecipe.getRecipeName().substring(0, 0)) { // if first letter of current is different than first letter of last then show first letter of current
                 letter = foodRecipe.getRecipeName().substring(0, 0);
             } else {
-                letter = "";
+                letter = " ";
             }
         }
 

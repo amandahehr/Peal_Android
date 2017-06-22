@@ -1,8 +1,13 @@
 package com.mmeh.peal.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.mmeh.peal.model.FoodItem;
+import com.mmeh.peal.model.FoodRecipe;
 
 import static com.mmeh.peal.database.FoodItemContract.*;
 import static com.mmeh.peal.database.FoodRecipeContract.*;
@@ -37,7 +42,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     FoodRecipeItemEntry._ID + " INTEGER PRIMARY KEY," +
                     FoodRecipeItemEntry.COLUMN_NAME_FOOD_RECIPE_ID + " INTEGER," +
                     FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID + " INTEGER," +
-                    FoodRecipeItemEntry.COLUMN_NAME_QUANTITY + "NUMERIC," +
+                    FoodRecipeItemEntry.COLUMN_NAME_QUANTITY + " NUMERIC," +
                     "FOREIGN KEY (" + FoodRecipeItemEntry.COLUMN_NAME_FOOD_RECIPE_ID + ") " +
                     "REFERENCES " + FoodRecipeEntry.TABLE_NAME + "(" + FoodRecipeEntry._ID + ")," +
                     "FOREIGN KEY (" + FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID + ") " +
@@ -118,5 +123,91 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
+
+    public long insertNewFoodItem(FoodItem newFoodItem) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodItemEntry.COLUMN_NAME_NAME, newFoodItem.getItemName());
+        values.put(FoodItemEntry.COLUMN_NAME_CATEGORY, newFoodItem.getItemCategory());
+        values.put(FoodItemEntry.COLUMN_NAME_MEASURE, newFoodItem.getItemMeasure());
+        values.put(FoodItemEntry.COLUMN_NAME_NDB, newFoodItem.getItemNDB());
+
+        long newFoodItemId = db.insert(FoodItemEntry.TABLE_NAME, null, values);
+
+        return newFoodItemId;
+    }
+
+    public long insertNewFoodRecipe(FoodRecipe newFoodRecipe) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodRecipeEntry.COLUMN_NAME_NAME, newFoodRecipe.getRecipeName());
+        values.put(FoodRecipeEntry.COLUMN_NAME_INSTRUCTIONS, newFoodRecipe.getRecipeInstructions());
+
+        long newRecipeId = db.insert(FoodRecipeEntry.TABLE_NAME, null, values);
+
+        for (int i = 0; i < newFoodRecipe.getFoodItems().size(); i++) {
+            String currentNDB = newFoodRecipe.getFoodItems().get(i).getItemNDB();
+            float quantity = newFoodRecipe.getFoodItems().get(i).getItemQuantity();
+
+            long foodItemId = getFoodItemIdByNDB(currentNDB);
+            if (foodItemId == 0) { // not found, create new
+                foodItemId = insertNewFoodItem(newFoodRecipe.getFoodItems().get(i));
+            }
+
+            insertNewFoodRecipeItem(newRecipeId, foodItemId, quantity);
+        }
+
+        return newRecipeId;
+    }
+    
+    public long insertNewFoodRecipeItem(long foodRecipeId, long foodItemId, float quantity) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodRecipeItemEntry.COLUMN_NAME_FOOD_RECIPE_ID, foodRecipeId);
+        values.put(FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID, foodItemId);
+        values.put(FoodRecipeItemEntry.COLUMN_NAME_QUANTITY, quantity);
+
+        long newRecipeItemId = db.insert(FoodRecipeItemEntry.TABLE_NAME, null, values);
+
+        return newRecipeItemId;
+    }
+
+    public long getFoodItemIdByNDB(String ndb) {
+        SQLiteDatabase db = getReadableDatabase();
+        long itemId = 0;
+
+        String[] projection = {
+                FoodItemEntry._ID,
+        };
+
+        String selection = FoodItemEntry.COLUMN_NAME_NDB + " = ?";
+        String[] selectionArgs = { ndb };
+        
+        String sortOrder = FoodItemEntry._ID + " ASC";
+
+        Cursor cursor = db.query(
+                FoodItemEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        while (cursor.moveToNext()) {
+            itemId = cursor.getLong(cursor.getColumnIndexOrThrow(FoodItemEntry._ID));
+            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FoodItemEntry.COLUMN_NAME_NAME));
+        }
+        cursor.close();
+
+        return itemId;
+    }
+
+
 
 }
