@@ -86,8 +86,6 @@ public class AddFoodRecipe extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 if (foodRecipeId == 0) { // new food recipe
                     saveRecipe();
                     setResult(RESULT_OK);
