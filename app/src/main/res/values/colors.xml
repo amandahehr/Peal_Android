@@ -4,4 +4,12 @@
     <color name="colorPrimaryDark">#12332b</color>
     <color name="colorAccent">#f6676c</color>
     <color name="colorBackgroundForm">#f9f3e4</color>
+    <color name="lightPink">#FD4E6D</color>
+    <color name="lightGreen">#BEFFD5</color>
+    <color name="lightBeige">#F9ECDF</color>
+    <color name="darkBeige">#EADBCE</color>
+    <color name="darkGreen">#7ADB9D</color>
+    <color name="darkGrey">#353535</color>
+    <color name="white">#FFFFFF</color>
+    <color name="toolbarColor">#31575E</color>
 </resources>

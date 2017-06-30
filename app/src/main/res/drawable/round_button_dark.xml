@@ -3,14 +3,14 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorPrimary" />
+            <solid android:color="@color/darkGreen" />
         </shape>
     </item>
 
     <item>
         <shape android:shape="oval">
-            <stroke android:width="20dp" android:color="@color/colorPrimary"></stroke>
-            <solid android:color="@color/colorBackgroundForm" />
+            <stroke android:width="20dp" android:color="@color/darkGreen"></stroke>
+            <solid android:color="@color/darkBeige" />
             <size android:width="20sp" android:height="20sp"/>
         </shape>
     </item>

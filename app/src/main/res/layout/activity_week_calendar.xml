@@ -26,8 +26,6 @@
             android:background="@drawable/ic_previous_week"
             android:padding="0dp"
             android:text=""
-            android:textColor="@color/colorBackgroundForm"
-            android:textSize="@dimen/week_cal_font_size_large"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="15%"
             tools:layout_marginBottom="0dp"
@@ -42,8 +40,8 @@
             android:background="@color/colorPrimary"
             android:padding="0dp"
             android:text="Week 1"
-            android:textColor="@color/colorBackgroundForm"
-            android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/white"
+            android:textSize="@dimen/week_cal_font_size_small"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="20%"
             android:layout_toRightOf="@+id/previousWeek"
@@ -58,8 +56,6 @@
             android:background="@drawable/ic_next_week"
             android:padding="0dp"
             android:text=""
-            android:textColor="@color/colorBackgroundForm"
-            android:textSize="@dimen/week_cal_font_size_large"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="15%"
             android:layout_toRightOf="@+id/currentWeek"
@@ -76,6 +72,7 @@
             android:background="@drawable/round_button"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/darkGrey"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="50%" />
 
@@ -88,6 +85,7 @@
             android:background="@drawable/round_button"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/darkGrey"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="50%" />
 
@@ -100,6 +98,7 @@
             android:background="@drawable/round_button_dark"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/darkGrey"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="50%" />
 
@@ -111,6 +110,7 @@
             android:background="@drawable/round_button_dark"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/darkGrey"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="50%" />
 
@@ -124,6 +124,7 @@
             android:background="@drawable/round_button"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/darkGrey"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="50%" />
 
@@ -137,6 +138,7 @@
             android:background="@drawable/round_button"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/darkGrey"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="50%" />
 
@@ -150,6 +152,7 @@
             android:background="@drawable/round_button_dark"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
+            android:textColor="@color/darkGrey"
             app:layout_heightPercent="22.5%"
             app:layout_widthPercent="50%" />
 
