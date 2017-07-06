@@ -17,49 +17,44 @@
 
         <Button
             android:id="@+id/previousWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/toolbar"
             android:layout_margin="0dp"
             android:background="@drawable/ic_previous_week"
             android:padding="0dp"
-            android:text=""
-            app:layout_heightPercent="22.5%"
-            app:layout_widthPercent="15%"
             tools:layout_marginBottom="0dp"
+            app:layout_heightPercent="5%"
             />
 
         <Button
             android:id="@+id/currentWeek"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/previousWeek"
             android:layout_margin="0dp"
             android:background="@color/colorPrimary"
             android:padding="0dp"
             android:text="Week 1"
             android:textColor="@color/white"
-            android:textSize="@dimen/week_cal_font_size_small"
-            app:layout_heightPercent="22.5%"
-            app:layout_widthPercent="20%"
-            android:layout_toRightOf="@+id/previousWeek"
+            android:textSize="@dimen/header_h1_font_size"
+            app:layout_heightPercent="17.5%"
+            app:layout_widthPercent="50%"
             tools:layout_marginBottom="0dp" />
 
         <Button
             android:id="@+id/nextWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_below="@+id/toolbar"
             android:layout_margin="0dp"
             android:background="@drawable/ic_next_week"
             android:padding="0dp"
-            android:text=""
-            app:layout_heightPercent="22.5%"
-            app:layout_widthPercent="15%"
-            android:layout_toRightOf="@+id/currentWeek"
-            tools:layout_marginBottom="0dp" />
+            android:layout_toLeftOf="@+id/day0"
+            tools:layout_marginBottom="0dp"
+            app:layout_heightPercent="5%"/>
 
 
 
@@ -68,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:layout_toRightOf="@+id/nextWeek"
+            android:layout_alignParentRight="true"
             android:background="@drawable/round_button"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"
@@ -81,7 +76,7 @@
             android:id="@+id/day1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nextWeek"
+            android:layout_below="@+id/currentWeek"
             android:background="@drawable/round_button"
             android:text="Button"
             android:textSize="@dimen/week_cal_font_size"

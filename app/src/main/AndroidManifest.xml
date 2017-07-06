@@ -65,16 +65,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".basicActivity"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_basic"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".AddFoodRecipe"
             android:configChanges="orientation"
             android:label="@string/title_activity_add_food_recipe"
-            android:parentActivityName=".RecipeBook"
+            android:parentActivityName="com.mmeh.peal.RecipeBook"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
