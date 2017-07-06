@@ -162,7 +162,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/toolbarColor"
             app:layout_heightPercent="10%"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -191,9 +191,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimaryDark"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimary"
+        android:background="@color/toolbarColor"
+        app:itemIconTint="@color/lightGreen"
+        app:itemTextColor="@color/lightGreen"
         app:menu="@menu/navigation" />
 
 </LinearLayout>

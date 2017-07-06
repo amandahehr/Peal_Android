@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.mmeh.peal.RecipeBook">
+    tools:context="com.mmeh.peal.RecipeBook"
+    android:background="@color/darkGrey">
 
     <Button
         android:id="@+id/add_recipe_button"
@@ -17,8 +18,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:onClick="addRecipeButtonClickEventHandler"
-        android:background="@drawable/ic_add" />
+        android:background="@drawable/ic_add"
+        android:backgroundTint="@color/lightGreen"
+        android:onClick="addRecipeButtonClickEventHandler" />
 
     <TextView
         android:id="@+id/my_recipes_text_view"
@@ -27,8 +29,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="My Recipes"
-        android:textSize="24sp" />
+        android:text="Recipe Book"
+        android:textColor="@color/white"
+        android:textSize="@dimen/header_h1_font_size" />
 
     <RelativeLayout
         android:id="@+id/search_form"
@@ -37,13 +40,13 @@
         android:layout_below="@+id/my_recipes_text_view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@color/colorBackgroundForm"
+        android:background="@color/lightBeige"
         android:weightSum="1">
 
         <EditText
             android:id="@+id/search_recipe_edit_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="10dp"
@@ -52,14 +55,18 @@
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/search_recipe_button"
             android:layout_toStartOf="@+id/search_recipe_button"
+            android:background="@color/toolbarColor"
+            android:ellipsize="middle"
             android:ems="10"
             android:hint="@string/search"
-            android:inputType="textPersonName" />
+            android:textColorHint="@color/darkGreen"
+            android:inputType="textPersonName"
+            android:textColor="@color/lightGreen" />
 
         <Button
             android:id="@+id/search_recipe_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignBottom="@+id/search_recipe_edit_text"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -68,7 +75,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginStart="10dp"
-            android:text="Search" />
+            android:background="@drawable/ic_search_black_24dp"
+            android:backgroundTint="@color/darkGreen" />
 
     </RelativeLayout>
 
@@ -77,9 +85,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_form"
-        android:layout_centerHorizontal="true" />
-
-
+        android:layout_centerHorizontal="true"
+        android:background="@color/lightBeige" />
 
 
 </RelativeLayout>

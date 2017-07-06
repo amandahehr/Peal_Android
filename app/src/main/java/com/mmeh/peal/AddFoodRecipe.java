@@ -47,7 +47,6 @@ public class AddFoodRecipe extends AppCompatActivity {
         setContentView(R.layout.activity_add_food_recipe);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // initialization of attributes and variables
         Bundle b = getIntent().getExtras();

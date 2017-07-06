@@ -37,7 +37,7 @@
                 android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/darkGrey"
                 android:padding="@dimen/header_h1_font_size"
                 android:text="@string/title_activity_day_view"
                 android:textAlignment="center"
