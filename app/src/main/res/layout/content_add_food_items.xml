@@ -12,45 +12,67 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/title_activity_add_food_items" />
+        android:text="@string/title_activity_add_food_items"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/header_h1_font_size"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+    <!--<TextView-->
+        <!--android:id="@+id/textView3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/textView2"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="37dp"-->
+        <!--android:text="Search in USDA API" />-->
+
+    <RelativeLayout
+        android:id="@+id/search_form"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
-        android:text="Search in USDA API" />
+        android:layout_marginTop="50dp"
+        android:background="@color/lightBeige"
+        android:weightSum="1">
 
-    <EditText
-        android:id="@+id/txtSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Search..."
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:background="@color/toolbarColor"
+            android:ellipsize="middle"
+            android:hint="Search..."
+            android:textColorHint="@color/darkGreen"
+            android:textColor="@color/lightGreen"
+            android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/btnSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txtSearch"
-        android:layout_alignTop="@+id/txtSearch"
-        android:layout_toEndOf="@+id/textView3"
-        android:layout_toRightOf="@+id/textView3"
-        android:onClick="btnSearchClickEventHandler"
-        android:text="Search" />
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/txtSearch"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/txtSearch"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/ic_search_black_24dp"
+            android:backgroundTint="@color/darkGreen"
+            android:onClick="btnSearchClickEventHandler" />
+
+        </RelativeLayout>
 
     <ListView
         android:id="@+id/foodItemsListView"
@@ -58,7 +80,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtSearch"
-        android:layout_marginTop="14dp" />
+        android:layout_below="@+id/search_form"
+        android:background="@color/lightBeige" />
 
 </RelativeLayout>

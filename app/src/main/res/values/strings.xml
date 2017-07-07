@@ -4,7 +4,7 @@
     <string name="title_activity_recipe_book">Recipe Book</string>
     <string name="title_activity_day_view">Day View</string>
     <string name="title_activity_meal_view">Meal View</string>
-    <string name="title_activity_add_food_items">Add Food Items</string>
+    <string name="title_activity_add_food_items">Food Items</string>
     <string name="title_activity_shopping_list">Shopping List</string>
     <string name="title_activity_bottom_nav">bottom_nav</string>
     <string name="title_shoppingList">Shopping List</string>

@@ -34,6 +34,7 @@
         android:id="@+id/include"
         layout="@layout/content_add_food_recipe" />
 
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"

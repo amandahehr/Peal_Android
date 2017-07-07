@@ -1,6 +1,7 @@
 package com.mmeh.peal.list_adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import com.mmeh.peal.R;
 import com.mmeh.peal.model.FoodRecipe;
 
@@ -48,10 +48,19 @@ public class FoodRecipeListAdapter extends ArrayAdapter<FoodRecipe> {
             }
         }
 
+
+        if (position % 2 == 1) {
+            convertView.setBackgroundColor(Color.rgb(249, 236, 223));
+        } else {
+            convertView.setBackgroundColor(Color.rgb(234, 219, 206));
+        }
+
         TextView letterTextView = (TextView) convertView.findViewById(R.id.letter_text_view);
         letterTextView.setText(letter);
         TextView recipeNameTextView = (TextView) convertView.findViewById(R.id.recipe_name_text_view);
         recipeNameTextView.setText(foodRecipe.getRecipeName());
+
+
 
         return convertView;
     }

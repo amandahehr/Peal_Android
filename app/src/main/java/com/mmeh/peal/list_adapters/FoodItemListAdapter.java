@@ -2,6 +2,7 @@ package com.mmeh.peal.list_adapters;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +36,12 @@ public class FoodItemListAdapter extends ArrayAdapter<FoodItem>{
         }
 
         FoodItem foodItem = foodItems.get(position);
+
+        if (position % 2 == 1) {
+            convertView.setBackgroundColor(Color.rgb(249, 236, 223));
+        } else {
+            convertView.setBackgroundColor(Color.rgb(234, 219, 206));
+        }
 
         TextView foodNameTextView = (TextView) convertView.findViewById(R.id.foodNameTextView);
         foodNameTextView.setText(foodItem.getItemName());

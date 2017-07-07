@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.mmeh.peal.SingleItem">
+    tools:context="com.mmeh.peal.SingleItem"
+    android:background="@color/darkGrey">
 
     <TextView
         android:id="@+id/item_name_text_view"
@@ -18,7 +19,8 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="Item Name"
         android:textAlignment="center"
-        android:textSize="@dimen/header_h1_font_size" />
+        android:textSize="@dimen/header_h1_font_size"
+        android:textColor="@color/lightGreen"/>
 
     <TextView
         android:id="@+id/item_measure_label_text_view"
@@ -28,7 +30,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="@string/default_measure"
-        android:textSize="@dimen/normal_text_font_size" />
+        android:textSize="@dimen/normal_text_font_size"
+        android:textColor="@color/lightGreen"/>
 
     <TextView
         android:id="@+id/item_measure_text_view"
@@ -38,7 +41,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="Item Measure"
-        android:textSize="@dimen/normal_text_font_size" />
+        android:textSize="@dimen/normal_text_font_size"
+        android:textColor="@color/lightGreen"/>
 
 
     <RelativeLayout
@@ -54,7 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Quantity:"
-            android:textSize="@dimen/normal_text_font_size" />
+            android:textSize="@dimen/normal_text_font_size"
+            android:textColor="@color/lightGreen"/>
 
         <EditText
             android:id="@+id/quantity_edit_text"
@@ -69,7 +74,9 @@
             android:ems="3"
             android:textAlignment="center"
             android:selectAllOnFocus="true"
-            android:textSize="@dimen/normal_text_font_size" />
+            android:textSize="@dimen/normal_text_font_size"
+            android:textColorHint="@color/lightGreen"
+            android:textColor="@color/lightGreen" />
 
     </RelativeLayout>
 
@@ -81,6 +88,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:onClick="confirmButtonClickEventHandler"
-        android:text="Confirm" />
+        android:text="Add Item"
+        android:background="@color/toolbarColor"
+        android:textColor="@color/lightGreen"
+        />
 
 </RelativeLayout>
