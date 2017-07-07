@@ -7,9 +7,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mmeh.peal.database.DataBaseHelper;
 import com.mmeh.peal.list_adapters.FoodItemOnRecipeListAdapter;
@@ -23,11 +25,13 @@ import java.util.List;
 public class AddFoodRecipe extends AppCompatActivity {
 
     private static final int FOOD_ITEM_REQUEST = 100;
+    private static final int SINGLE_ITEM_REQUEST = 200;
 
     public static final String RETURN_FOOD_NAME = "RETURN_FOOD_NAME";
     public static final String RETURN_FOOD_CATEGORY = "RETURN_FOOD_CATEGORY";
     public static final String RETURN_FOOD_MEASURE = "RETURN_FOOD_MEASURE";
     public static final String RETURN_FOOD_NDB = "RETURN_FOOD_NDB";
+    public static final String RETURN_FOOD_QUANTITY = "RETURN_FOOD_QUANTITY";
 
     private DataBaseHelper myDbHelper;
     private List<FoodItem> foodItemsOnRecipe;
@@ -35,11 +39,13 @@ public class AddFoodRecipe extends AppCompatActivity {
     private FoodRecipe foodRecipe;
     private int foodRecipeId;
     private boolean recipeEditable;
+    private int itemIndexEditQuantity;
 
     private FloatingActionButton fab;
     private EditText foodRecipeNameEditText;
     private EditText foodRecipeInstructionsEditText;
     private ListView listFoodItemsOnRecipeListView;
+    private Button addFoodItemOnRecipeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class AddFoodRecipe extends AppCompatActivity {
         );
         foodRecipeId = b.getInt(RecipeBook.FOOD_RECIPE_ID);
         recipeEditable = false;
+        itemIndexEditQuantity = 0;
         myDbHelper = new DataBaseHelper(this);
 
         // associating attributes with components in screen
@@ -64,7 +71,7 @@ public class AddFoodRecipe extends AppCompatActivity {
         foodRecipeNameEditText = (EditText) findViewById(R.id.food_recipe_name_edit_text);
         listFoodItemsOnRecipeListView = (ListView) findViewById(R.id.list_food_items_on_recipe_list_view);
         foodRecipeInstructionsEditText = (EditText) findViewById(R.id.food_recipe_instructions_edit_text);
-
+        addFoodItemOnRecipeButton = (Button) findViewById(R.id.add_food_item_on_recipe_button);
 
         listFoodItemsOnRecipeListView.setAdapter(adapter);
 
@@ -76,6 +83,13 @@ public class AddFoodRecipe extends AppCompatActivity {
         } else { // edit food recipe
             // TODO: Code search for RecipeID and fill foodRecipe
             // TODO: Code fill the objects in the screen with foodRecipe
+            foodRecipe = myDbHelper.getFoodRecipeById(foodRecipeId);
+
+            foodRecipeNameEditText.setText(foodRecipe.getRecipeName());
+            foodRecipeInstructionsEditText.setText(foodRecipe.getRecipeInstructions());
+            foodItemsOnRecipe.addAll(foodRecipe.getFoodItems());
+            adapter.notifyDataSetChanged();
+
             fab.setImageResource(android.R.drawable.ic_menu_edit);
             setAllComponentsEditable(false);
 
@@ -101,6 +115,7 @@ public class AddFoodRecipe extends AppCompatActivity {
             }
         });
 
+
     }
 
     @Override
@@ -111,17 +126,27 @@ public class AddFoodRecipe extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FOOD_ITEM_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                FoodItem fi = new FoodItem(
-                        data.getStringExtra(RETURN_FOOD_NAME),
-                        data.getStringExtra(RETURN_FOOD_CATEGORY),
-                        data.getStringExtra(RETURN_FOOD_NDB),
-                        data.getStringExtra(RETURN_FOOD_MEASURE)
-                );
-                foodItemsOnRecipe.add(fi);
-                adapter.notifyDataSetChanged();
-            }
+        switch (requestCode) {
+            case FOOD_ITEM_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    FoodItem fi = new FoodItem(
+                            data.getStringExtra(RETURN_FOOD_NAME),
+                            data.getStringExtra(RETURN_FOOD_CATEGORY),
+                            data.getStringExtra(RETURN_FOOD_NDB),
+                            data.getStringExtra(RETURN_FOOD_MEASURE),
+                            data.getFloatExtra(RETURN_FOOD_QUANTITY, 0)
+                    );
+                    foodItemsOnRecipe.add(fi);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            case SINGLE_ITEM_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    float f = data.getFloatExtra(RETURN_FOOD_QUANTITY, 0);
+                    foodItemsOnRecipe.get(itemIndexEditQuantity).setItemQuantity(f);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
         }
     }
 
@@ -129,12 +154,12 @@ public class AddFoodRecipe extends AppCompatActivity {
         foodRecipeNameEditText.setEnabled(b);
         listFoodItemsOnRecipeListView.setEnabled(b);
         foodRecipeInstructionsEditText.setEnabled(b);
+        addFoodItemOnRecipeButton.setEnabled(b);
         recipeEditable = b;
     }
 
     public void removeItemButtonClickEventHandler(View view) {
-        // saving all the quantities
-        saveAllQuantitiesInList();
+        if (!recipeEditable) return;
 
         Button b = (Button) view.findViewById(R.id.remove_item_button);
         FoodItem fi = foodItemsOnRecipe.get(Integer.parseInt(b.getTag().toString()));
@@ -142,22 +167,26 @@ public class AddFoodRecipe extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void addFoodItemOnRecipeClickEventHandler(View view) {
-        // saving all the quantities
-        saveAllQuantitiesInList();
+    public void editItemQuantityClickEventHandler(View view) {
+        if (!recipeEditable) return;
 
+        Button b = (Button) view.findViewById(R.id.remove_item_button);
+        FoodItem fi = foodItemsOnRecipe.get(Integer.parseInt(b.getTag().toString()));
+
+        Intent intent = new Intent(AddFoodRecipe.this, SingleItem.class);
+        intent.putExtra(SingleItem.FROM_WHAT_SCREEN, SingleItem.SCREEN_ADD_FOOD_RECIPE);
+        intent.putExtra(SingleItem.ITEM_NAME, fi.getItemName());
+        intent.putExtra(SingleItem.ITEM_MEASURE, fi.getItemMeasure());
+        intent.putExtra(SingleItem.ITEM_QUANTITY, fi.getItemQuantity());
+        itemIndexEditQuantity = Integer.parseInt(b.getTag().toString());
+        startActivityForResult(intent, SINGLE_ITEM_REQUEST);
+
+    }
+
+    public void addFoodItemOnRecipeClickEventHandler(View view) {
         Intent intent = new Intent(view.getContext(), AddFoodItems.class);
         intent.putExtra(AddFoodItems.FROM_WHAT_SCREEN, AddFoodItems.SCREEN_ADD_FOOD_RECIPE);
         startActivityForResult(intent, FOOD_ITEM_REQUEST);
-    }
-
-    private void saveAllQuantitiesInList() {
-        for (int i = 0; i < listFoodItemsOnRecipeListView.getChildCount(); i++) {
-            EditText et = (EditText) listFoodItemsOnRecipeListView.getChildAt(i).findViewById(R.id.quantity_edit_text);
-            float qt = Float.parseFloat(et.getText().toString());
-            FoodItem fi = foodItemsOnRecipe.get(i);
-            fi.setItemQuantity(qt);
-        }
     }
 
     private void saveRecipe() {
@@ -169,4 +198,5 @@ public class AddFoodRecipe extends AppCompatActivity {
 
         myDbHelper.insertNewFoodRecipe(foodRecipe);
     }
+
 }

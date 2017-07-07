@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.mmeh.peal.SingleItem">
+
+    <TextView
+        android:id="@+id/item_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="Item Name"
+        android:textAlignment="center"
+        android:textSize="@dimen/header_h1_font_size" />
+
+    <TextView
+        android:id="@+id/item_measure_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_name_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/default_measure"
+        android:textSize="@dimen/normal_text_font_size" />
+
+    <TextView
+        android:id="@+id/item_measure_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_measure_label_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Item Measure"
+        android:textSize="@dimen/normal_text_font_size" />
+
+
+    <RelativeLayout
+        android:id="@+id/quantity_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_measure_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp">
+
+        <TextView
+            android:id="@+id/quantity_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity:"
+            android:textSize="@dimen/normal_text_font_size" />
+
+        <EditText
+            android:id="@+id/quantity_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/quantity_text_view"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/quantity_text_view"
+            android:inputType="numberDecimal"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:ems="3"
+            android:textAlignment="center"
+            android:selectAllOnFocus="true"
+            android:textSize="@dimen/normal_text_font_size" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quantity_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:onClick="confirmButtonClickEventHandler"
+        android:text="Confirm" />
+
+</RelativeLayout>

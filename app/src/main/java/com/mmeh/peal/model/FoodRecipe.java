@@ -7,18 +7,28 @@ public class FoodRecipe {
     private String recipeName;
     private ArrayList<FoodItem> foodItems;
     private String recipeInstructions;
-    // TODO: check if there is any other attributes for this class. !ATTENTION! Whenever creating new attributes the constructors and the toString() method must be updated/analysed.
+    private float recipeServingSize;
 
 
     public FoodRecipe() {
         recipeName = "";
         recipeInstructions = "";
+        recipeServingSize = (float) 1;
+        this.foodItems = new ArrayList<>();
     }
 
     public FoodRecipe(String recipeName, ArrayList<FoodItem> foodItems, String recipeInstructions) {
         this.recipeName = recipeName;
         this.foodItems = foodItems;
         this.recipeInstructions = recipeInstructions;
+        this.recipeServingSize = (float) 1;
+    }
+
+    public FoodRecipe(String recipeName, String recipeInstructions, float recipeServingSize) {
+        this.recipeName = recipeName;
+        this.foodItems = new ArrayList<>();
+        this.recipeInstructions = recipeInstructions;
+        this.recipeServingSize = recipeServingSize;
     }
 
     public String getRecipeName() {
@@ -43,6 +53,14 @@ public class FoodRecipe {
 
     public void setRecipeInstructions(String recipeInstructions) {
         this.recipeInstructions = recipeInstructions;
+    }
+
+    public float getRecipeServingSize() {
+        return recipeServingSize;
+    }
+
+    public void setRecipeServingSize(float recipeServingSize) {
+        this.recipeServingSize = recipeServingSize;
     }
 
     public void addFoodItem(FoodItem newFoodItem) {

@@ -12,7 +12,13 @@ public class FoodItem {
     private String itemMeasure;
     private float itemQuantity;
 
-    public FoodItem() {}
+    public FoodItem() {
+        itemName = "";
+        itemCategory = "";
+        itemNDB = "";
+        itemMeasure = "";
+        itemQuantity = 0;
+    }
 
     public FoodItem(String itemName, String itemCategory, String itemNDB, String itemMeasure) {
         this.itemName = itemName;

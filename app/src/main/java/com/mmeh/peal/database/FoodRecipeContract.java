@@ -11,6 +11,7 @@ public final class FoodRecipeContract {
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_INSTRUCTIONS = "instructions";
+        public static final String COLUMN_NAME_SERVING_SIZE = "serving_size";
     }
 
 }

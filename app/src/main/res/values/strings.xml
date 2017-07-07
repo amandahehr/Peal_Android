@@ -22,4 +22,6 @@
     <string name="measurement">Measurement</string>
     <string name="qt">Qt:</string>
     <string name="instructions">Instructions:</string>
+    <string name="title_activity_single_item">SingleItem</string>
+    <string name="default_measure">Default Measure:</string>
 </resources>

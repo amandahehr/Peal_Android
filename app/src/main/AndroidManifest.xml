@@ -16,7 +16,7 @@
             android:label="@string/title_activity_month_calendar"
             android:parentActivityName=".WeekCalendar"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RecipeBook"
             android:configChanges="orientation"
@@ -69,7 +69,7 @@
             android:configChanges="orientation"
             android:label="@string/title_activity_basic"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddFoodRecipe"
             android:configChanges="orientation"
@@ -81,6 +81,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mmeh.peal.RecipeBook" />
         </activity>
+        <activity
+            android:name=".SingleItem"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_single_item"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

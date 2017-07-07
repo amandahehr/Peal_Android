@@ -9,7 +9,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mmeh.peal.database.DataBaseHelper;
 import com.mmeh.peal.database.FoodRecipeContract;
@@ -17,7 +20,11 @@ import com.mmeh.peal.model.FoodRecipe;
 import com.mmeh.peal.list_adapters.FoodRecipeListAdapter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RecipeBook extends AppCompatActivity {
 
@@ -27,6 +34,7 @@ public class RecipeBook extends AppCompatActivity {
 
     DataBaseHelper myDbHelper;
     List<FoodRecipe> foodRecipes;
+    Map<FoodRecipe, Integer> recipesId;
     FoodRecipeListAdapter adapter;
 
     ListView recipesListView;
@@ -68,6 +76,7 @@ public class RecipeBook extends AppCompatActivity {
 
         myDbHelper = new DataBaseHelper(this);
         foodRecipes = new ArrayList<>();
+        recipesId = new HashMap<>();
         adapter = new FoodRecipeListAdapter(
                 RecipeBook.this, R.layout.list_food_recipe, foodRecipes
         );
@@ -75,6 +84,16 @@ public class RecipeBook extends AppCompatActivity {
 
         loadAllRecipes();
         adapter.notifyDataSetChanged();
+
+        recipesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), AddFoodRecipe.class);
+                intent.putExtra(FOOD_RECIPE_ID, recipesId.get(foodRecipes.get(position)));
+                startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);
+            }
+        });
+
     }
 
     @Override
@@ -91,6 +110,10 @@ public class RecipeBook extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 break;
             case EDIT_FOOD_RECIPE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    loadAllRecipes();
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             default:
                 break;
@@ -118,11 +141,15 @@ public class RecipeBook extends AppCompatActivity {
         );
 
         foodRecipes.clear();
+        recipesId.clear();
 
         while (cursor.moveToNext()) {
             int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(FoodRecipeContract.FoodRecipeEntry._ID));
             String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeContract.FoodRecipeEntry.COLUMN_NAME_NAME));
-            foodRecipes.add(new FoodRecipe(itemName, null, ""));
+
+            FoodRecipe fr = new FoodRecipe(itemName, null, "");
+            foodRecipes.add(fr);
+            recipesId.put(fr, itemId);
         }
         cursor.close();
     }

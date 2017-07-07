@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.mmeh.peal.model.FoodItem;
 import com.mmeh.peal.model.FoodRecipe;
+
+import java.util.ArrayList;
 
 import static com.mmeh.peal.database.FoodItemContract.*;
 import static com.mmeh.peal.database.FoodRecipeContract.*;
@@ -36,7 +39,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     FoodRecipeEntry._ID + " INTEGER PRIMARY KEY," +
                     FoodRecipeEntry.COLUMN_NAME_NAME + " TEXT," +
                     FoodRecipeEntry.COLUMN_NAME_DESCRIPTION + " TEXT," +
-                    FoodRecipeEntry.COLUMN_NAME_INSTRUCTIONS + " TEXT); ";
+                    FoodRecipeEntry.COLUMN_NAME_INSTRUCTIONS + " TEXT," +
+                    FoodRecipeEntry.COLUMN_NAME_SERVING_SIZE + " NUMERIC); ";
     private static final String SQL_CREATE_FOOD_RECIPE_ITEM =
             "CREATE TABLE " + FoodRecipeItemEntry.TABLE_NAME + " (" +
                     FoodRecipeItemEntry._ID + " INTEGER PRIMARY KEY," +
@@ -145,6 +149,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(FoodRecipeEntry.COLUMN_NAME_NAME, newFoodRecipe.getRecipeName());
         values.put(FoodRecipeEntry.COLUMN_NAME_INSTRUCTIONS, newFoodRecipe.getRecipeInstructions());
+        values.put(FoodRecipeEntry.COLUMN_NAME_SERVING_SIZE, newFoodRecipe.getRecipeServingSize());
 
         long newRecipeId = db.insert(FoodRecipeEntry.TABLE_NAME, null, values);
 
@@ -201,7 +206,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
             itemId = cursor.getLong(cursor.getColumnIndexOrThrow(FoodItemEntry._ID));
-            String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FoodItemEntry.COLUMN_NAME_NAME));
         }
         cursor.close();
 
@@ -209,5 +213,109 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public FoodRecipe getFoodRecipeById(int recipeId) {
+        FoodRecipe fr = new FoodRecipe();
+        // recipes table
+        Log.d("WTM", "before getFoodRecipeById query");
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                FoodRecipeEntry.COLUMN_NAME_NAME,
+                FoodRecipeEntry.COLUMN_NAME_INSTRUCTIONS,
+                FoodRecipeEntry.COLUMN_NAME_SERVING_SIZE
+        };
+        String selection = FoodRecipeEntry._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(recipeId)};
 
+        Cursor cursor = db.query(
+                FoodRecipeEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        Log.d("WTM", "after getFoodRecipeById query");
+        while (cursor.moveToNext()) {
+            fr.setRecipeName(cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeEntry.COLUMN_NAME_NAME)));
+            fr.setRecipeInstructions(cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeEntry.COLUMN_NAME_INSTRUCTIONS)));
+            fr.setRecipeServingSize(cursor.getFloat(cursor.getColumnIndexOrThrow(FoodRecipeEntry.COLUMN_NAME_SERVING_SIZE)));
+        }
+        cursor.close();
+
+        // recipes items table
+        fr.setFoodItems(getFoodRecipeItemsById(recipeId));
+
+        return fr;
+    }
+
+    public ArrayList<FoodItem> getFoodRecipeItemsById(int recipeId) {
+        ArrayList<FoodItem> foodItems = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        Log.d("WTM", "before getFoodRecipeItemsById query");
+        String[] projection = {
+                FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID,
+                FoodRecipeItemEntry.COLUMN_NAME_QUANTITY
+        };
+        String selection = FoodRecipeItemEntry.COLUMN_NAME_FOOD_RECIPE_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(recipeId)};
+        String sortOrder = FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID + " ASC";
+
+        Cursor cursor = db.query(
+                FoodRecipeItemEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+        Log.d("WTM", "after getFoodRecipeItemsById query");
+
+        while (cursor.moveToNext()) {
+            FoodItem fi = getFoodItemById(cursor.getInt(cursor.getColumnIndexOrThrow(FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID)));
+            fi.setItemQuantity(cursor.getFloat(cursor.getColumnIndexOrThrow(FoodRecipeItemEntry.COLUMN_NAME_QUANTITY)));
+            foodItems.add(fi);
+        }
+        cursor.close();
+
+        return foodItems;
+    }
+
+    public FoodItem getFoodItemById(int itemId) {
+        FoodItem foodItem = new FoodItem();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                FoodItemEntry.COLUMN_NAME_NAME,
+                FoodItemEntry.COLUMN_NAME_CATEGORY,
+                FoodItemEntry.COLUMN_NAME_NDB,
+                FoodItemEntry.COLUMN_NAME_MEASURE
+        };
+
+        String selection = FoodItemEntry._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(itemId)};
+
+        Cursor cursor = db.query(
+                FoodItemEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        while (cursor.moveToNext()) {
+            foodItem.setItemName(cursor.getString(cursor.getColumnIndexOrThrow(FoodItemEntry.COLUMN_NAME_NAME)));
+            foodItem.setItemCategory(cursor.getString(cursor.getColumnIndexOrThrow(FoodItemEntry.COLUMN_NAME_CATEGORY)));
+            foodItem.setItemNDB(cursor.getString(cursor.getColumnIndexOrThrow(FoodItemEntry.COLUMN_NAME_NDB)));
+            foodItem.setItemMeasure(cursor.getString(cursor.getColumnIndexOrThrow(FoodItemEntry.COLUMN_NAME_MEASURE)));
+        }
+        cursor.close();
+
+        return foodItem;
+    }
 }

@@ -30,11 +30,16 @@ import java.util.List;
 
 public class AddFoodItems extends AppCompatActivity {
 
+    private static final int SINGLE_ITEM_REQUEST = 100;
+
+    public static final String RETURN_QUANTITY = "RETURN_QUANTITY";
+
     private final String TAG_SEARCH_MEASURE = "USDAQuery-SearchMeasure";
     private final String TAG_SEARCH_NAME = "USDAQuery-SearchName";
 
     private List<FoodItem> foodItems;
     private RequestQueue queue;
+    private int chosenItem;
 
     private ListView foodItemsListView;
 
@@ -78,6 +83,7 @@ public class AddFoodItems extends AppCompatActivity {
         foodItems = new ArrayList<>();
         queue = Volley.newRequestQueue(this);
         foodItemsListView = (ListView) findViewById(R.id.foodItemsListView);
+        chosenItem = 0;
 
         Bundle b = getIntent().getExtras();
         try {
@@ -86,6 +92,17 @@ public class AddFoodItems extends AppCompatActivity {
             Toast.makeText(this, "Error on get bundle (previous screen)", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SINGLE_ITEM_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                float quantity = data.getFloatExtra(RETURN_QUANTITY, 0);
+                finishMyActivityOk(chosenItem, quantity);
+            }
+        }
     }
 
     public void btnSearchClickEventHandler(View view) {
@@ -207,7 +224,8 @@ public class AddFoodItems extends AppCompatActivity {
                             Toast.makeText(AddFoodItems.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
-                        finishMyActivityOk(index);
+                        // get item quantity = go to quantity screen
+                        callSingleItemActivity(index);
 
                     } // public void onResponse(String response)
                 }, // Response.Listener<String>()
@@ -215,18 +233,29 @@ public class AddFoodItems extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(AddFoodItems.this, "Food source is not responding (USDA API). Result is not complete.", Toast.LENGTH_LONG).show();
-                        finishMyActivityOk(index);
+                        finishMyActivityOk(index, 0);
                     }
                 }); // Response.ErrorListener()
     }
 
-    private void finishMyActivityOk(int index) {
+    private void callSingleItemActivity(int index) {
+        Intent intent = new Intent(AddFoodItems.this, SingleItem.class);
+        intent.putExtra(SingleItem.FROM_WHAT_SCREEN, SingleItem.SCREEN_ADD_FOOD_ITEMS);
+        intent.putExtra(SingleItem.ITEM_NAME, foodItems.get(index).getItemName());
+        intent.putExtra(SingleItem.ITEM_MEASURE, foodItems.get(index).getItemMeasure());
+        intent.putExtra(SingleItem.ITEM_QUANTITY, foodItems.get(index).getItemQuantity());
+        chosenItem = index;
+        startActivityForResult(intent, SINGLE_ITEM_REQUEST);
+    }
+
+    private void finishMyActivityOk(int index, float quantity) {
         Intent data = new Intent();
         if (fromWhatScreen == SCREEN_ADD_FOOD_RECIPE) {
             data.putExtra(AddFoodRecipe.RETURN_FOOD_NAME, foodItems.get(index).getItemName());
             data.putExtra(AddFoodRecipe.RETURN_FOOD_CATEGORY, foodItems.get(index).getItemCategory());
             data.putExtra(AddFoodRecipe.RETURN_FOOD_NDB, foodItems.get(index).getItemNDB());
             data.putExtra(AddFoodRecipe.RETURN_FOOD_MEASURE, foodItems.get(index).getItemMeasure());
+            data.putExtra(AddFoodRecipe.RETURN_FOOD_QUANTITY, quantity);
         } else {
             data.putExtra(MealView.RETURN_MESSAGE, foodItems.get(index).toString());
         }
