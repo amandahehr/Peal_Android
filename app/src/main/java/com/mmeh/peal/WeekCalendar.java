@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +21,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.icu.util.Calendar;
 
+import java.sql.Time;
+
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class WeekCalendar extends AppCompatActivity {
+    public int currentWeek;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -52,19 +56,22 @@ public class WeekCalendar extends AppCompatActivity {
 
     public int getWeek(){
         Calendar calendar = Calendar.getInstance();
-        int week = calendar.WEEK_OF_YEAR;
+        int week = calendar.get(Calendar.WEEK_OF_YEAR);
         return week;
+    }
+
+    public int nextWeek(int current_week){
+        return current_week++;
     }
 
     public void setWeekDays(int week){
 
-
-
         DateFormat format = new SimpleDateFormat("dd");
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.WEEK_OF_YEAR, week);
         calendar.setFirstDayOfWeek(Calendar.SUNDAY);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        //calendar.set(Calendar.WEEK_OF_YEAR, week);
+
         final String[] days = new String[7];
         for(int i = 0; i < 7; i++)
         {
@@ -76,45 +83,41 @@ public class WeekCalendar extends AppCompatActivity {
 
         Calendar currentDay = Calendar.getInstance();
         String currentDate = format.format(currentDay.getTime());
-        Log.d("test", currentDate);
+        SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("E");
+        String weekDay = dayOfWeekFormat.format(currentDay.getTime());
 
-        Button month = (Button)findViewById(R.id.nextWeek);
+        Button month = (Button)findViewById(R.id.currentWeek);
         month.setText(month_name);
+
+
         Button day_0 = (Button)findViewById(R.id.day0);
         day_0.setText(days[0] + "\nSUN");
-        if(days[0].equals(currentDate)){
-            day_0.setBackgroundResource(R.drawable.round_button_current_day_dark);
-        }
+        setCurrentDayL(days[0] + "Sun", day_0, currentDate + weekDay);
+
         Button day_1 = (Button)findViewById(R.id.day1);
         day_1.setText(days[1]+ "\nMON");
-        if(days[1].equals(currentDate)){
-            day_1.setBackgroundResource(R.drawable.round_button_current_day_dark);
-        }
+        setCurrentDayL(days[1] + "Mon", day_1, currentDate + weekDay);
+
         Button day_2 = (Button)findViewById(R.id.day2);
         day_2.setText(days[2]+ "\nTUE");
-        if(days[2].equals(currentDate)){
-            day_2.setBackgroundResource(R.drawable.round_button_current_day);
-        }
+        setCurrentDayD(days[2] + "Tue", day_2, currentDate + weekDay);
+
         Button day_3 = (Button)findViewById(R.id.day3);
         day_3.setText(days[3]+ "\nWED");
-        if(days[3].equals(currentDate)){
-            day_3.setBackgroundResource(R.drawable.round_button_current_day);
-        }
+        setCurrentDayD(days[3] + "Wed", day_3, currentDate + weekDay);
+
         Button day_4 = (Button)findViewById(R.id.day4);
         day_4.setText(days[4]+ "\nTHU");
-        if(days[4].equals(currentDate)){
-            day_4.setBackgroundResource(R.drawable.round_button_current_day_dark);
-        }
+        setCurrentDayL(days[4] + "Thu", day_4, currentDate + weekDay);
+
         Button day_5 = (Button)findViewById(R.id.day5);
         day_5.setText(days[5]+ "\nFRI");
-        if(days[5].equals(currentDate)){
-            day_5.setBackgroundResource(R.drawable.round_button_current_day_dark);
-        }
+        setCurrentDayL(days[5] + "Fri", day_5, currentDate + weekDay);
+
         Button day_6 = (Button)findViewById(R.id.day6);
         day_6.setText(days[6]+ "\nSAT");
-        if(days[6].equals(currentDate)){
-            day_6.setBackgroundResource(R.drawable.round_button_current_day);
-        }
+        setCurrentDayD(days[6] + "Sat", day_6, currentDate + weekDay);
+
 
         day_0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,12 +163,34 @@ public class WeekCalendar extends AppCompatActivity {
         });
 
 
-
+        Button next_week = (Button)findViewById(R.id.nextWeek);
+        next_week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentWeek++;
+                setWeekDays(currentWeek);
+            }
+        });
+        Button previous_week = (Button)findViewById(R.id.previousWeek);
+        previous_week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentWeek--;
+                setWeekDays(currentWeek);
+            }
+        });
+        Button current_week = (Button)findViewById(R.id.currentWeek);
+        current_week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar current = Calendar.getInstance();
+                currentWeek = current.get(Calendar.WEEK_OF_YEAR);
+                setWeekDays(currentWeek);
+            }
+        });
     }
 
-    public int nextWeek(int currentWeek){
-        return currentWeek++;
-    }
+
 
 
 
@@ -178,29 +203,10 @@ public class WeekCalendar extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        int currentWeek = getWeek();
+        currentWeek = getWeek();
         setWeekDays(currentWeek);
 
-        Log.v("testi", "testiii");
 
-
-//        Button b=(Button) findViewById(R.id.nextWeek);
-//        setButtonSize(b);
-//        b=(Button) findViewById(R.id.day0);
-//        setButtonSize(b);
-//        b=(Button) findViewById(R.id.day1);
-//        setButtonSize(b);
-//        b=(Button) findViewById(R.id.day2);
-//        setButtonSize(b);
-//        b=(Button) findViewById(R.id.day3);
-//        setButtonSize(b);
-//        b=(Button) findViewById(R.id.day4);
-//        setButtonSize(b);
-//        b=(Button) findViewById(R.id.day5);
-//        setButtonSize(b);
-//        b=(Button) findViewById(R.id.day6);
-//        setButtonSize(b);
 
     }
 
@@ -218,10 +224,23 @@ public class WeekCalendar extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void setButtonSize(Button b){
-        int width = getResources().getDisplayMetrics().widthPixels/3;
-        int hei=getResources().getDisplayMetrics().heightPixels/3;
-        b.setLayoutParams(new RelativeLayout.LayoutParams(width,hei));
+    public void setCurrentDayD(String day, Button button, String currentDate){
+        if(day.equals(currentDate)){
+            button.setBackgroundResource(R.drawable.round_button_current_day);
+        }
+        else {
+            button.setBackgroundResource(R.drawable.round_button_dark);
+        }
+    }
+    public void setCurrentDayL(String day, Button button, String currentDate){
+        if(day.equals(currentDate)){
+            button.setBackgroundResource(R.drawable.round_button_current_day_dark);
+            button.setTextColor(getResources().getColor(R.color.lightBeige));
+        }
+        else {
+            button.setBackgroundResource(R.drawable.round_button);
+            button.setTextColor(getResources().getColor(R.color.darkGrey));
+        }
     }
 
 

@@ -65,12 +65,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".basicActivity"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_basic"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".AddFoodRecipe"
             android:configChanges="orientation"
             android:label="@string/title_activity_add_food_recipe"

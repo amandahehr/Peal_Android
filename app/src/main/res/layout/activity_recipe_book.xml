@@ -6,18 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mmeh.peal.WeekCalendar">
+    tools:context="com.mmeh.peal.WeekCalendar"
+    android:background="@color/darkGrey">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/toolbarColor"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/toolbarColor"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -27,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        <include layout="@layout/content_recipe_book"/>
+        <include layout="@layout/content_recipe_book" />
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -35,9 +37,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimaryDark"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimary"
+        android:background="@color/toolbarColor"
+        app:itemIconTint="@color/lightGreen"
+        app:itemTextColor="@color/lightGreen"
         app:menu="@menu/navigation" />
 
 </LinearLayout>

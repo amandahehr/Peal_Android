@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mmeh.peal.DayView">
+    tools:context="com.mmeh.peal.DayView"
+    android:background="@color/lightBeige">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/toolbarColor"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -36,12 +37,12 @@
                 android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/darkGrey"
                 android:padding="@dimen/header_h1_font_size"
                 android:text="@string/title_activity_day_view"
                 android:textAlignment="center"
-                android:textColor="@color/colorBackgroundForm"
-                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_h1_font_size"
                 app:layout_heightPercent="25%"
                 android:gravity="center"/>
 
@@ -50,9 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/message"
-                android:background="@color/colorPrimary"
+                android:background="@color/darkGreen"
                 android:text="Breakfast"
-                android:textColor="@color/colorBackgroundForm"
+                android:textColor="@color/white"
                 android:textSize="@dimen/header_h2_font_size"
                 app:layout_heightPercent="10%"
                 android:gravity="center"
@@ -161,9 +162,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimaryDark"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimary"
+        android:background="@color/toolbarColor"
+        app:itemIconTint="@color/lightGreen"
+        app:itemTextColor="@color/lightGreen"
         app:menu="@menu/navigation" />
 
 </LinearLayout>
