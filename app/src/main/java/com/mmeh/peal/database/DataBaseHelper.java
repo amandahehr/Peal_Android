@@ -11,6 +11,7 @@ import com.mmeh.peal.model.FoodItem;
 import com.mmeh.peal.model.FoodRecipe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.mmeh.peal.database.FoodItemContract.*;
 import static com.mmeh.peal.database.FoodRecipeContract.*;
@@ -23,8 +24,8 @@ import static com.mmeh.peal.database.MealDayTypeRecipeContract.*;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Peal.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "Peal.db";
 
     private static final String SQL_CREATE_FOOD_ITEM =
             "CREATE TABLE " + FoodItemEntry.TABLE_NAME + " (" +
@@ -138,9 +139,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(FoodItemEntry.COLUMN_NAME_MEASURE, newFoodItem.getItemMeasure());
         values.put(FoodItemEntry.COLUMN_NAME_NDB, newFoodItem.getItemNDB());
 
-        long newFoodItemId = db.insert(FoodItemEntry.TABLE_NAME, null, values);
-
-        return newFoodItemId;
+        return db.insert(FoodItemEntry.TABLE_NAME, null, values);
     }
 
     public long insertNewFoodRecipe(FoodRecipe newFoodRecipe) {
@@ -176,9 +175,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID, foodItemId);
         values.put(FoodRecipeItemEntry.COLUMN_NAME_QUANTITY, quantity);
 
-        long newRecipeItemId = db.insert(FoodRecipeItemEntry.TABLE_NAME, null, values);
-
-        return newRecipeItemId;
+        return db.insert(FoodRecipeItemEntry.TABLE_NAME, null, values);
     }
 
     public long getFoodItemIdByNDB(String ndb) {
@@ -216,7 +213,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public FoodRecipe getFoodRecipeById(int recipeId) {
         FoodRecipe fr = new FoodRecipe();
         // recipes table
-        Log.d("WTM", "before getFoodRecipeById query");
         SQLiteDatabase db = getReadableDatabase();
         String[] projection = {
                 FoodRecipeEntry.COLUMN_NAME_NAME,
@@ -236,7 +232,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 null
         );
 
-        Log.d("WTM", "after getFoodRecipeById query");
         while (cursor.moveToNext()) {
             fr.setRecipeName(cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeEntry.COLUMN_NAME_NAME)));
             fr.setRecipeInstructions(cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeEntry.COLUMN_NAME_INSTRUCTIONS)));
@@ -254,7 +249,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ArrayList<FoodItem> foodItems = new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
-        Log.d("WTM", "before getFoodRecipeItemsById query");
         String[] projection = {
                 FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID,
                 FoodRecipeItemEntry.COLUMN_NAME_QUANTITY
@@ -272,7 +266,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 null,
                 sortOrder
         );
-        Log.d("WTM", "after getFoodRecipeItemsById query");
 
         while (cursor.moveToNext()) {
             FoodItem fi = getFoodItemById(cursor.getInt(cursor.getColumnIndexOrThrow(FoodRecipeItemEntry.COLUMN_NAME_FOOD_ITEM_ID)));
@@ -317,5 +310,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return foodItem;
+    }
+
+    public ArrayList<FoodRecipe> getRecipeByName(String recipeName) {
+        ArrayList<FoodRecipe> foodRecipes = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                FoodRecipeEntry.COLUMN_NAME_NAME
+        };
+        String selection = FoodRecipeEntry.COLUMN_NAME_NAME + " LIKE ?";
+        String[] selectionArgs = {"%" + recipeName + "%"};
+
+        Cursor cursor = db.query(
+                FoodRecipeEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        while (cursor.moveToNext()) {
+            FoodRecipe fr = new FoodRecipe();
+            fr.setRecipeName(cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeEntry.COLUMN_NAME_NAME)));
+            foodRecipes.add(fr);
+        }
+        cursor.close();
+
+        return foodRecipes;
     }
 }

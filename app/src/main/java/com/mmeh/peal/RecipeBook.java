@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class RecipeBook extends AppCompatActivity {
     FoodRecipeListAdapter adapter;
 
     ListView recipesListView;
+    EditText searchRecipeEditText;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -60,6 +63,7 @@ public class RecipeBook extends AppCompatActivity {
             }
             startActivity(intent);
             return true;
+
         }
 
     };
@@ -73,6 +77,7 @@ public class RecipeBook extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         recipesListView = (ListView) findViewById(R.id.recipes_list_view);
+        searchRecipeEditText = (EditText) findViewById(R.id.search_recipe_edit_text);
 
         myDbHelper = new DataBaseHelper(this);
         foodRecipes = new ArrayList<>();
@@ -120,6 +125,7 @@ public class RecipeBook extends AppCompatActivity {
         }
     }
 
+    // TODO: UPGRADE: create this logic inside DataBaseHelper and make this method call it
     private void loadAllRecipes() {
         SQLiteDatabase db = myDbHelper.getReadableDatabase();
 
@@ -158,5 +164,17 @@ public class RecipeBook extends AppCompatActivity {
         Intent intent = new Intent(this, AddFoodRecipe.class);
         intent.putExtra(FOOD_RECIPE_ID, 0);
         startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);
+    }
+
+    public void searchRecipeButtonClickEventHandler(View view) {
+        if (searchRecipeEditText.getText().toString().trim().equals("")) {
+            loadAllRecipes();
+            adapter.notifyDataSetChanged();
+        }
+
+        String s = searchRecipeEditText.getText().toString();
+        foodRecipes.clear();
+        foodRecipes.addAll(myDbHelper.getRecipeByName(s));
+        adapter.notifyDataSetChanged();
     }
 }

@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,10 +147,6 @@ public class AddFoodRecipe extends AppCompatActivity {
             }
         });
 
-
-
-
-
     }
 
     @Override
@@ -214,7 +211,6 @@ public class AddFoodRecipe extends AppCompatActivity {
         intent.putExtra(SingleItem.ITEM_QUANTITY, fi.getItemQuantity());
         itemIndexEditQuantity = Integer.parseInt(b.getTag().toString());
         startActivityForResult(intent, SINGLE_ITEM_REQUEST);
-
     }
 
     public void addFoodItemOnRecipeClickEventHandler(View view) {
