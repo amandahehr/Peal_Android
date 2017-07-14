@@ -124,4 +124,27 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="51dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="28dp"
+        android:text="Confirm"
+        android:layout_below="@+id/food_recipes_container"
+        android:layout_alignLeft="@+id/meal_type_text_view"
+        android:layout_alignStart="@+id/meal_type_text_view" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/meal_type_text_view"
+        android:layout_alignRight="@+id/meal_type_text_view"
+        android:layout_alignTop="@+id/confirm_button"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:text="Cancel" />
+
 </RelativeLayout>
