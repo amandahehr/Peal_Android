@@ -13,4 +13,5 @@
     <color name="white">#ffffff</color>
     <color name="toolbarColor">#31575e</color>
     <color name="babyPink">#ff8da6</color>
+    <color name="splashbg">#f9f9f9</color>
 </resources>

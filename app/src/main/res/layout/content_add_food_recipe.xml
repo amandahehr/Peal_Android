@@ -23,7 +23,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:background="@drawable/ic_add"
+        android:background="@drawable/ic_trash"
         android:backgroundTint="@color/lightGreen"
         android:onClick="deleteFoodRecipe" />
 
