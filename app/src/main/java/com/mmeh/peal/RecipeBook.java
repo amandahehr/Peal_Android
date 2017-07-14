@@ -35,6 +35,10 @@ public class RecipeBook extends AppCompatActivity {
     private static final int SINGLE_ITEM_REQUEST = 300;
 
     // return
+    public static final String RETURN_RECIPE_ID = "RETURN_RECIPE_ID";
+    public static final String RETURN_RECIPE_NAME = "RETURN_RECIPE_NAME";
+    public static final String RETURN_RECIPE_QUANTITY = "RETURN_RECIPE_QUANTITY";
+    public static final String RETURN_RECIPE_SERVING_SIZE = "RETURN_RECIPE_SERVING_SIZE";
 
     // in arguments
     public static final String IN_FROM_WHAT_SCREEN = "IN_FROM_WHAT_SCREEN";
@@ -121,9 +125,9 @@ public class RecipeBook extends AppCompatActivity {
                     startActivityForResult(intent, SINGLE_ITEM_REQUEST);
 
                 } else {
+                    chosenItem = position;
                     Intent intent = new Intent(view.getContext(), AddFoodRecipe.class);
                     intent.putExtra(AddFoodRecipe.FOOD_RECIPE_ID, recipesId.get(foodRecipes.get(position)));
-                    chosenItem = position;
                     startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);
                 }
             }
@@ -151,18 +155,20 @@ public class RecipeBook extends AppCompatActivity {
                 }
                 break;
             case SINGLE_ITEM_REQUEST:
-                returnToMealView();
+                float quantity = data.getFloatExtra(SingleItem.RETURN_QUANTITY, 0);
+                returnToMealView(quantity);
                 break;
             default:
                 break;
         }
     }
 
-    private void returnToMealView() {
+    private void returnToMealView(float quantity) {
         Intent data = new Intent();
-//        data.putExtra(RETURN_RECIPE_ID, foodItems.get(index).getItemName());
-//        data.putExtra(RETURN_RECIPE_NAME, foodItems.get(index).getItemName());
-//        data.putExtra(RETURN_RECIPE_INSTRUCTIONS, foodItems.get(index).getItemCategory());
+        data.putExtra(RETURN_RECIPE_ID, recipesId.get(foodRecipes.get(chosenItem)));
+        data.putExtra(RETURN_RECIPE_NAME, foodRecipes.get(chosenItem).getRecipeName());
+        data.putExtra(RETURN_RECIPE_SERVING_SIZE, foodRecipes.get(chosenItem).getRecipeServingSize());
+        data.putExtra(RETURN_RECIPE_QUANTITY, quantity);
         setResult(RESULT_OK, data);
         finish();
     }

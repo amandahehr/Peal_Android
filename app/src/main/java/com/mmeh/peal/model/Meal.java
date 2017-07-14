@@ -60,18 +60,11 @@ public class Meal {
     }
 
     public void addFoodRecipe(FoodRecipe newRecipe) {
-        // TODO: code this method - addFoodRecipe
+        getFoodRecipes().add(newRecipe);
     }
 
     public void addFoodItem(FoodItem newItem) {
-        // TODO: code this method - addFoodItem
+        getFoodItems().add(newItem);
     }
 
-    public void removeFoodRecipe(String recipeId) {
-        // TODO: code this method - removeFoodRecipe
-    }
-
-    public void removeFoodItem(String itemId) {
-        // TODO: code this method - removeFoodItem
-    }
 }

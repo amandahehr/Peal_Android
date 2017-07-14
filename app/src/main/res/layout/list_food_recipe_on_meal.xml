@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:background="@android:drawable/ic_menu_delete"
-        android:onClick="removeItemButtonClickEventHandler" />
+        android:onClick="removeRecipeButtonClickEventHandler" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
