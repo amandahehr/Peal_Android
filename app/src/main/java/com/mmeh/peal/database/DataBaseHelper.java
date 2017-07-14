@@ -166,6 +166,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return newRecipeId;
     }
+
+    public long deleteRecipe(String foodRecipeId){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(FoodRecipeItemEntry.TABLE_NAME, FoodRecipeItemEntry.COLUMN_NAME_FOOD_RECIPE_ID + "=" + foodRecipeId, null);
+        return db.delete(FoodRecipeEntry.TABLE_NAME, FoodRecipeEntry._ID + "=" + foodRecipeId, null);
+    }
     
     public long insertNewFoodRecipeItem(long foodRecipeId, long foodItemId, float quantity) {
         SQLiteDatabase db = getWritableDatabase();

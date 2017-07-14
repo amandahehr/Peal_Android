@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent">
+
 
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,6 +12,20 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mmeh.peal.AddFoodRecipe">
+
+    <Button
+        android:id="@+id/delete_recipe_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/ic_add"
+        android:backgroundTint="@color/lightGreen"
+        android:onClick="deleteFoodRecipe" />
 
     <EditText
         android:id="@+id/food_recipe_name_edit_text"
@@ -34,6 +46,14 @@
         android:textSize="@dimen/header_h1_font_size"
         android:background="@color/darkGrey"/>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/food_recipe_name_edit_text">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/container_food_items_relative_layout"
@@ -41,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/food_recipe_name_edit_text"
+
         android:background="@color/lightBeige"
         android:orientation="horizontal">
 
@@ -112,6 +132,7 @@
 
 
     </LinearLayout>
-
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
-</ScrollView>
+

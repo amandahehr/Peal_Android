@@ -52,6 +52,7 @@ public class AddFoodRecipe extends AppCompatActivity {
     private EditText foodRecipeInstructionsEditText;
     private ListView listFoodItemsOnRecipeListView;
     private Button addFoodItemOnRecipeButton;
+    private Button deleteRecipeButton;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -104,6 +105,7 @@ public class AddFoodRecipe extends AppCompatActivity {
         listFoodItemsOnRecipeListView = (ListView) findViewById(R.id.list_food_items_on_recipe_list_view);
         foodRecipeInstructionsEditText = (EditText) findViewById(R.id.food_recipe_instructions_edit_text);
         addFoodItemOnRecipeButton = (Button) findViewById(R.id.add_food_item_on_recipe_button);
+        deleteRecipeButton = (Button) findViewById(R.id.delete_recipe_button);
 
         listFoodItemsOnRecipeListView.setAdapter(adapter);
 
@@ -144,6 +146,13 @@ public class AddFoodRecipe extends AppCompatActivity {
                         setAllComponentsEditable(true);
                     }
                 }
+            }
+        });
+
+       deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteFoodRecipe();
             }
         });
 
@@ -227,6 +236,17 @@ public class AddFoodRecipe extends AppCompatActivity {
         foodRecipe.setFoodItems(foodItems);
 
         myDbHelper.insertNewFoodRecipe(foodRecipe);
+    }
+
+    public void deleteFoodRecipe(){
+        Intent intent;
+        intent = new Intent(this, RecipeBook.class);
+        startActivity(intent);
+
+        String id = Integer.toString(foodRecipeId);
+        String[] id2 = {id};
+        myDbHelper.deleteRecipe(id);
+
     }
 
 }
