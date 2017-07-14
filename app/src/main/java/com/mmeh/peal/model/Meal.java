@@ -7,11 +7,17 @@ public class Meal {
     private String mealType;
     private ArrayList<FoodRecipe> foodRecipes;
     private ArrayList<FoodItem> foodItems;
-    // TODO: check if there is any other attributes for this class. !ATTENTION! Whenever creating new attributes the constructors and the toString() method must be updated/analysed.
 
     public Meal() {
-        // TODO: complete this constructor.
+        this.mealType = "";
+        foodRecipes = new ArrayList<>();
+        foodItems = new ArrayList<>();
+    }
 
+    public Meal(String mealType) {
+        this.mealType = mealType;
+        foodRecipes = new ArrayList<>();
+        foodItems = new ArrayList<>();
     }
 
     public Meal(String mealType, ArrayList<FoodRecipe> foodRecipes, ArrayList<FoodItem> foodItems) {

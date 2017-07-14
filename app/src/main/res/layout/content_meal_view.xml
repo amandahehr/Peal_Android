@@ -8,32 +8,120 @@
     tools:context="com.mmeh.peal.MealView">
 
     <TextView
-        android:id="@+id/message"
+        android:id="@+id/meal_type_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/title_activity_meal_view" />
+        android:text="Meal Type"
+        android:textAlignment="center"
+        android:textSize="@dimen/header_h1_font_size" />
 
-    <TextView
-        android:id="@+id/returnTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/food_items_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/message"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:text="Test Return" />
+        android:layout_below="@+id/meal_type_text_view"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnAddItem"
-        android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/food_items_label_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="Foods"
+                android:textSize="@dimen/header_h2_font_size" />
+
+            <Button
+                android:id="@+id/add_food_item_button"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/ic_add"
+                android:backgroundTint="@color/toolbarColor"
+                android:onClick="addFoodItemButtonClickEventHandler" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/food_item_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/food_recipes_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/returnTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp"
-        android:onClick="btnAddItemClickEventHandler"
-        android:text="Add Food Item" />
+        android:layout_below="@+id/food_items_container"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/food_recipes_label_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="Recipes"
+                android:textSize="@dimen/header_h2_font_size" />
+
+            <Button
+                android:id="@+id/add_food_recipe_button"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/ic_add"
+                android:backgroundTint="@color/toolbarColor"
+                android:onClick="addFoodRecipeButtonClickEventHandler" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/food_recipe_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </RelativeLayout>

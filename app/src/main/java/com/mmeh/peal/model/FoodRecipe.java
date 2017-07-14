@@ -8,6 +8,7 @@ public class FoodRecipe {
     private ArrayList<FoodItem> foodItems;
     private String recipeInstructions;
     private float recipeServingSize;
+    private float recipeQuantity;
 
 
     public FoodRecipe() {
@@ -71,12 +72,22 @@ public class FoodRecipe {
         return (getFoodItems().indexOf(foodItem) == -1 ? false : true);
     }
 
+    public float getRecipeQuantity() {
+        return recipeQuantity;
+    }
+
+    public void setRecipeQuantity(float recipeQuantity) {
+        this.recipeQuantity = recipeQuantity;
+    }
+
     @Override
     public String toString() {
         return "FoodRecipe{" +
                 "recipeName='" + recipeName + '\'' +
                 ", foodItems=" + foodItems +
                 ", recipeInstructions='" + recipeInstructions + '\'' +
+                ", recipeServingSize=" + recipeServingSize +
+                ", recipeQuantity=" + recipeQuantity +
                 '}';
     }
 

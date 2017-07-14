@@ -30,9 +30,14 @@ import java.util.List;
 
 public class AddFoodRecipe extends AppCompatActivity {
 
+    // requests
     private static final int FOOD_ITEM_REQUEST = 100;
     private static final int SINGLE_ITEM_REQUEST = 200;
 
+    // in arguments
+    public static final String FOOD_RECIPE_ID = "FOOD_RECIPE_ID";
+
+    // returns
     public static final String RETURN_FOOD_NAME = "RETURN_FOOD_NAME";
     public static final String RETURN_FOOD_CATEGORY = "RETURN_FOOD_CATEGORY";
     public static final String RETURN_FOOD_MEASURE = "RETURN_FOOD_MEASURE";
@@ -93,7 +98,7 @@ public class AddFoodRecipe extends AppCompatActivity {
         adapter = new FoodItemOnRecipeListAdapter(
                 AddFoodRecipe.this, R.layout.list_food_item_on_recipe, foodItemsOnRecipe
         );
-        foodRecipeId = b.getInt(RecipeBook.FOOD_RECIPE_ID);
+        foodRecipeId = b.getInt(FOOD_RECIPE_ID);
         recipeEditable = false;
         itemIndexEditQuantity = 0;
         myDbHelper = new DataBaseHelper(this);

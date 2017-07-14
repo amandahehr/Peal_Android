@@ -20,6 +20,7 @@ public class SingleItem extends AppCompatActivity {
     public static String FROM_WHAT_SCREEN = "FROM_WHAT_SCREEN";
     public static final int SCREEN_ADD_FOOD_ITEMS = 1;
     public static final int SCREEN_ADD_FOOD_RECIPE = 2;
+    public static final int SCREEN_RECIPE_BOOK = 3;
 
     private TextView itemNameTextView;
     private TextView itemMeasureTextView;

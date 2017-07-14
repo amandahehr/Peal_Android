@@ -34,6 +34,13 @@ public class AddFoodItems extends AppCompatActivity {
 
     public static final String RETURN_QUANTITY = "RETURN_QUANTITY";
 
+    // out arguments (return)
+    public static final String RETURN_FOOD_NAME = "RETURN_FOOD_NAME";
+    public static final String RETURN_FOOD_CATEGORY = "RETURN_FOOD_CATEGORY";
+    public static final String RETURN_FOOD_NDB = "RETURN_FOOD_NDB";
+    public static final String RETURN_FOOD_MEASURE = "RETURN_FOOD_MEASURE";
+    public static final String RETURN_FOOD_QUANTITY = "RETURN_FOOD_QUANTITY";
+
     private final String TAG_SEARCH_MEASURE = "USDAQuery-SearchMeasure";
     private final String TAG_SEARCH_NAME = "USDAQuery-SearchName";
 
@@ -45,6 +52,7 @@ public class AddFoodItems extends AppCompatActivity {
 
     public static final String FROM_WHAT_SCREEN = "FROM_WHAT_SCREEN";
     public static final int SCREEN_ADD_FOOD_RECIPE = 1;
+    public static final int SCREEN_MEAL_VIEW = 2;
     private int fromWhatScreen;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -251,13 +259,18 @@ public class AddFoodItems extends AppCompatActivity {
     private void finishMyActivityOk(int index, float quantity) {
         Intent data = new Intent();
         if (fromWhatScreen == SCREEN_ADD_FOOD_RECIPE) {
+            // TODO: UPGRADE: return arguments should be in the own class. Change here and AddFoodRecipe
             data.putExtra(AddFoodRecipe.RETURN_FOOD_NAME, foodItems.get(index).getItemName());
             data.putExtra(AddFoodRecipe.RETURN_FOOD_CATEGORY, foodItems.get(index).getItemCategory());
             data.putExtra(AddFoodRecipe.RETURN_FOOD_NDB, foodItems.get(index).getItemNDB());
             data.putExtra(AddFoodRecipe.RETURN_FOOD_MEASURE, foodItems.get(index).getItemMeasure());
             data.putExtra(AddFoodRecipe.RETURN_FOOD_QUANTITY, quantity);
         } else {
-            data.putExtra(MealView.RETURN_MESSAGE, foodItems.get(index).toString());
+            data.putExtra(RETURN_FOOD_NAME, foodItems.get(index).getItemName());
+            data.putExtra(RETURN_FOOD_CATEGORY, foodItems.get(index).getItemCategory());
+            data.putExtra(RETURN_FOOD_NDB, foodItems.get(index).getItemNDB());
+            data.putExtra(RETURN_FOOD_MEASURE, foodItems.get(index).getItemMeasure());
+            data.putExtra(RETURN_FOOD_QUANTITY, quantity);
         }
         setResult(RESULT_OK, data);
         finish();

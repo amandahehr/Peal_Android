@@ -67,15 +67,18 @@ public class WeekCalendar extends AppCompatActivity {
     public void setWeekDays(int week){
 
         DateFormat format = new SimpleDateFormat("dd");
+        DateFormat dateFormatYYYYMMDD = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.WEEK_OF_YEAR, week);
         calendar.setFirstDayOfWeek(Calendar.SUNDAY);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 
         final String[] days = new String[7];
+        final String[] daysFullDate = new String[7];
         for(int i = 0; i < 7; i++)
         {
             days[i] = format.format(calendar.getTime());
+            daysFullDate[i] = dateFormatYYYYMMDD.format(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
@@ -122,43 +125,43 @@ public class WeekCalendar extends AppCompatActivity {
         day_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDay(days[0], month_name);
+                goToDay(days[0], month_name, daysFullDate[0]);
             }
         });
         day_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDay(days[1], month_name);
+                goToDay(days[1], month_name, daysFullDate[1]);
             }
         });
         day_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDay(days[2], month_name);
+                goToDay(days[2], month_name, daysFullDate[2]);
             }
         });
         day_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDay(days[3], month_name);
+                goToDay(days[3], month_name, daysFullDate[3]);
             }
         });
         day_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDay(days[4], month_name);
+                goToDay(days[4], month_name, daysFullDate[4]);
             }
         });
         day_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDay(days[5], month_name);
+                goToDay(days[5], month_name, daysFullDate[5]);
             }
         });
         day_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDay(days[6], month_name);
+                goToDay(days[6], month_name, daysFullDate[6]);
             }
         });
 
@@ -210,17 +213,12 @@ public class WeekCalendar extends AppCompatActivity {
 
     }
 
-    public void goToTestScreen(View view) {
-        Intent intent;
-        intent = new Intent(this, MealView.class);
-        startActivity(intent);
-    }
-
-    public void goToDay(String day, String month){
+    public void goToDay(String day, String month, String fullDate){
         Intent intent;
         intent = new Intent(this, DayView.class);
         intent.putExtra("Month", month);
         intent.putExtra("Day", day);
+        intent.putExtra(DayView.IN_DATE, fullDate);
         startActivity(intent);
     }
 

@@ -29,20 +29,31 @@ import java.util.Set;
 
 public class RecipeBook extends AppCompatActivity {
 
+    // requests
     private static final int NEW_FOOD_RECIPE_REQUEST = 100;
     private static final int EDIT_FOOD_RECIPE_REQUEST = 200;
-    public static final String FOOD_RECIPE_ID = "FOOD_RECIPE_ID";
+    private static final int SINGLE_ITEM_REQUEST = 300;
+
+    // return
+
+    // in arguments
+    public static final String IN_FROM_WHAT_SCREEN = "IN_FROM_WHAT_SCREEN";
+
+    // screens that call this activity
+    public static final int SCREEN_MEAL_VIEW = 1;
 
     DataBaseHelper myDbHelper;
     List<FoodRecipe> foodRecipes;
     Map<FoodRecipe, Integer> recipesId;
     FoodRecipeListAdapter adapter;
+    int fromWhatScreen;
+    int chosenItem;
 
     ListView recipesListView;
     EditText searchRecipeEditText;
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -74,11 +85,17 @@ public class RecipeBook extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_book);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
         recipesListView = (ListView) findViewById(R.id.recipes_list_view);
         searchRecipeEditText = (EditText) findViewById(R.id.search_recipe_edit_text);
 
+        Bundle bundle = getIntent().getExtras();
+        try {
+            fromWhatScreen = bundle.getInt(IN_FROM_WHAT_SCREEN);
+        } catch (Exception e) {
+            fromWhatScreen = 0;
+        }
         myDbHelper = new DataBaseHelper(this);
         foodRecipes = new ArrayList<>();
         recipesId = new HashMap<>();
@@ -86,6 +103,7 @@ public class RecipeBook extends AppCompatActivity {
                 RecipeBook.this, R.layout.list_food_recipe, foodRecipes
         );
         recipesListView.setAdapter(adapter);
+        chosenItem = 0;
 
         loadAllRecipes();
         adapter.notifyDataSetChanged();
@@ -93,9 +111,21 @@ public class RecipeBook extends AppCompatActivity {
         recipesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(), AddFoodRecipe.class);
-                intent.putExtra(FOOD_RECIPE_ID, recipesId.get(foodRecipes.get(position)));
-                startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);
+                // if you came from the MealView then you want to add a recipe, not just looking/creating one
+                if (fromWhatScreen == SCREEN_MEAL_VIEW) {
+                    Intent intent = new Intent(view.getContext(), SingleItem.class);
+                    intent.putExtra(SingleItem.FROM_WHAT_SCREEN, SingleItem.SCREEN_RECIPE_BOOK);
+                    intent.putExtra(SingleItem.ITEM_NAME, foodRecipes.get(position).getRecipeName());
+                    intent.putExtra(SingleItem.ITEM_MEASURE, foodRecipes.get(position).getRecipeServingSize());
+                    intent.putExtra(SingleItem.ITEM_QUANTITY, foodRecipes.get(position).getRecipeQuantity());
+                    startActivityForResult(intent, SINGLE_ITEM_REQUEST);
+
+                } else {
+                    Intent intent = new Intent(view.getContext(), AddFoodRecipe.class);
+                    intent.putExtra(AddFoodRecipe.FOOD_RECIPE_ID, recipesId.get(foodRecipes.get(position)));
+                    chosenItem = position;
+                    startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);
+                }
             }
         });
 
@@ -120,9 +150,21 @@ public class RecipeBook extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 }
                 break;
+            case SINGLE_ITEM_REQUEST:
+                returnToMealView();
+                break;
             default:
                 break;
         }
+    }
+
+    private void returnToMealView() {
+        Intent data = new Intent();
+//        data.putExtra(RETURN_RECIPE_ID, foodItems.get(index).getItemName());
+//        data.putExtra(RETURN_RECIPE_NAME, foodItems.get(index).getItemName());
+//        data.putExtra(RETURN_RECIPE_INSTRUCTIONS, foodItems.get(index).getItemCategory());
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     // TODO: UPGRADE: create this logic inside DataBaseHelper and make this method call it
@@ -162,7 +204,7 @@ public class RecipeBook extends AppCompatActivity {
 
     public void addRecipeButtonClickEventHandler(View view) {
         Intent intent = new Intent(this, AddFoodRecipe.class);
-        intent.putExtra(FOOD_RECIPE_ID, 0);
+        intent.putExtra(AddFoodRecipe.FOOD_RECIPE_ID, 0);
         startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);
     }
 

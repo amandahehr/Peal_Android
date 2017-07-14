@@ -8,32 +8,23 @@ public class MealPlan {
     public final String LUNCH = "LUNCH";
     public final String DINNER = "DINNER";
 
-    private int dayMealPlanId;
     private String dayMealPlanDate;
     private Meal breakfastMeal;
     private Meal lunchMeal;
     private Meal dinnerMeal;
-    // TODO: check if there is any other attributes for this class. !ATTENTION! Whenever creating new attributes the constructors and the toString() method must be updated/analysed.
 
-
-    public MealPlan() {
-        // TODO: complete this constructor
+    public MealPlan(String mealPlanDate) {
+        this.dayMealPlanDate = mealPlanDate;
+        breakfastMeal = new Meal(BREAKFAST);
+        lunchMeal = new Meal(LUNCH);
+        dinnerMeal = new Meal(DINNER);
     }
 
     public MealPlan(int dayMealPlanId, String dayMealPlanDate, Meal breakfastMeal, Meal lunchMeal, Meal dinnerMeal) {
-        this.dayMealPlanId = dayMealPlanId;
         this.dayMealPlanDate = dayMealPlanDate;
         this.breakfastMeal = breakfastMeal;
         this.lunchMeal = lunchMeal;
         this.dinnerMeal = dinnerMeal;
-    }
-
-    public int getDayMealPlanId() {
-        return dayMealPlanId;
-    }
-
-    public void setDayMealPlanId(int dayMealPlanId) {
-        this.dayMealPlanId = dayMealPlanId;
     }
 
     public String getDayMealPlanDate() {

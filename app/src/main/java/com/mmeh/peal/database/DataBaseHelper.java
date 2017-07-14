@@ -5,13 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.mmeh.peal.model.FoodItem;
 import com.mmeh.peal.model.FoodRecipe;
+import com.mmeh.peal.model.Meal;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.mmeh.peal.database.FoodItemContract.*;
 import static com.mmeh.peal.database.FoodRecipeContract.*;
@@ -340,5 +339,178 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return foodRecipes;
+    }
+
+    public Meal getMealByDateType(String fullDate, String mealType) {
+        Meal meal = new Meal(mealType);
+
+        long mealDayId = getMealDayIdByDate(fullDate);
+        long mealDayTypeId = getMealDayTypeIdByMealDayIdType(mealDayId, mealType);
+        if (mealDayTypeId != 0) {
+            meal.setFoodItems(getFoodItemsByMealDayTypeId(mealDayTypeId));
+            meal.setFoodRecipes(getFoodRecipesByMealDayTypeId(mealDayTypeId));
+        }
+
+        return meal;
+    }
+
+    public long getMealDayIdByDate(String fullDate) {
+        long mealDayId = 0;
+
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                MealDayEntry._ID
+        };
+        String selection = MealDayEntry.COLUMN_NAME_MEAL_DATE + " = ?";
+        String[] selectionArgs = { fullDate };
+
+        Cursor cursor = db.query(
+                MealDayEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // get the last found only
+        if (cursor.moveToLast()) {
+            mealDayId = cursor.getLong(cursor.getColumnIndexOrThrow(MealDayEntry._ID));
+        }
+        cursor.close();
+
+        return mealDayId;
+    }
+
+    private long getMealDayTypeIdByMealDayIdType(long mealDayId, String mealType) {
+        long mealDayTypeId = 0;
+
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                MealDayTypeEntry._ID
+        };
+        String selection = MealDayTypeEntry.COLUMN_NAME_MEAL_DAY_ID + " = ?" +
+                 " AND " + MealDayTypeEntry.COLUMN_NAME_MEAL_DAY_TYPE + " = ?";
+        String[] selectionArgs = { String.valueOf(mealDayId), mealType };
+
+        Cursor cursor = db.query(
+                MealDayTypeEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // get the first found only
+        if (cursor.moveToFirst()) {
+            mealDayTypeId = cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeEntry._ID));
+        }
+        cursor.close();
+
+        return mealDayTypeId;
+    }
+
+    private ArrayList<FoodItem> getFoodItemsByMealDayTypeId(long mealDayTypeId) {
+        ArrayList<FoodItem> foodItems = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                MealDayTypeItemEntry.COLUMN_NAME_FOOD_ITEM_ID,
+                MealDayTypeItemEntry.COLUMN_NAME_QUANTITY
+        };
+        String selection = MealDayTypeItemEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(mealDayTypeId) };
+
+        Cursor cursor = db.query(
+                MealDayTypeItemEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        while (cursor.moveToNext()) {
+            FoodItem newFoodItem = getFoodItemById((int) cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeItemEntry.COLUMN_NAME_FOOD_ITEM_ID)));
+            newFoodItem.setItemQuantity(cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeItemEntry.COLUMN_NAME_QUANTITY)));
+            foodItems.add(newFoodItem);
+        }
+        cursor.close();
+
+        return foodItems;
+    }
+
+    private ArrayList<FoodRecipe> getFoodRecipesByMealDayTypeId(long mealDayTypeId) {
+        ArrayList<FoodRecipe> foodRecipes = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                MealDayTypeRecipeEntry.COLUMN_NAME_FOOD_RECIPE_ID,
+                MealDayTypeRecipeEntry.COLUMN_NAME_QUANTITY
+        };
+        String selection = MealDayTypeRecipeEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(mealDayTypeId) };
+
+        Cursor cursor = db.query(
+                MealDayTypeRecipeEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        while (cursor.moveToNext()) {
+            FoodRecipe newFoodRecipe = getFoodRecipeById((int) cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeRecipeEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID)));
+            newFoodRecipe.setRecipeQuantity(cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeRecipeEntry.COLUMN_NAME_QUANTITY)));
+            foodRecipes.add(newFoodRecipe);
+        }
+        cursor.close();
+
+        return foodRecipes;
+    }
+
+    public long getMealDayTypeIdByDateType(String fullDate, String mealType) {
+        long mealDayId = getMealDayIdByDate(fullDate);
+        return getMealDayTypeIdByMealDayIdType(mealDayId, mealType);
+    }
+
+    public Meal getMealByMealDayTypeId(int mealDayTypeId) {
+        Meal meal = new Meal();
+
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                MealDayTypeEntry.COLUMN_NAME_MEAL_DAY_TYPE
+        };
+        String selection = MealDayTypeEntry._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(mealDayTypeId) };
+
+        Cursor cursor = db.query(
+                MealDayTypeEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // get the first found only
+        if (cursor.moveToLast()) {
+            meal.setMealType(cursor.getString(cursor.getColumnIndexOrThrow(MealDayTypeEntry.COLUMN_NAME_MEAL_DAY_TYPE)));
+        }
+        cursor.close();
+
+        if (mealDayTypeId != 0) {
+            meal.setFoodItems(getFoodItemsByMealDayTypeId(mealDayTypeId));
+            meal.setFoodRecipes(getFoodRecipesByMealDayTypeId(mealDayTypeId));
+        }
+
+        return meal;
     }
 }
