@@ -8,12 +8,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mmeh.peal.database.DataBaseHelper;
+import com.mmeh.peal.list_adapters.FoodItemListAdapter;
 import com.mmeh.peal.list_adapters.FoodItemOnRecipeListAdapter;
 import com.mmeh.peal.list_adapters.FoodRecipeOnMealListAdapter;
 import com.mmeh.peal.model.FoodItem;
@@ -119,6 +123,11 @@ public class MealView extends AppCompatActivity {
 
             case FOOD_RECIPE_REQUEST:
                 if (resultCode == RESULT_OK) {
+                    FoodRecipe fr = new FoodRecipe();
+                    fr.setRecipeName(data.getStringExtra(RecipeBook.RETURN_RECIPE_NAME));
+                    fr.setRecipeQuantity(data.getFloatExtra(RecipeBook.RETURN_RECIPE_QUANTITY, 0));
+                    fr.setRecipeServingSize(data.getFloatExtra(RecipeBook.RETURN_RECIPE_SERVING_SIZE, 0));
+                    myMeal.addFoodRecipe(fr);
                     updateFoodRecipeList();
                 }
                 break;
@@ -136,9 +145,22 @@ public class MealView extends AppCompatActivity {
 
     public void addFoodRecipeButtonClickEventHandler(View view) {
         Intent intent = new Intent(view.getContext(), RecipeBook.class);
-
+        intent.putExtra(RecipeBook.IN_FROM_WHAT_SCREEN, RecipeBook.SCREEN_MEAL_VIEW);
         startActivityForResult(intent, FOOD_RECIPE_REQUEST);
     }
+
+    public void removeItemButtonClickEventHandler(View view) {
+        Button b = (Button) view.findViewById(R.id.remove_item_button);
+        myMeal.getFoodItems().remove(Integer.parseInt(b.getTag().toString()));
+        updateFoodItemList();
+    }
+
+    public void removeRecipeButtonClickEventHandler(View view) {
+        Button b = (Button) view.findViewById(R.id.remove_item_button);
+        myMeal.getFoodRecipes().remove(Integer.parseInt(b.getTag().toString()));
+        updateFoodRecipeList();
+    }
+
 
     private void updateLists() {
         updateFoodItemList();

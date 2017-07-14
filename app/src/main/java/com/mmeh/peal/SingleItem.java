@@ -16,6 +16,9 @@ public class SingleItem extends AppCompatActivity {
     public static final String ITEM_MEASURE = "ITEM_MEASURE";
     public static final String ITEM_QUANTITY = "ITEM_QUANTITY";
 
+    // return
+    public static final String RETURN_QUANTITY = "RETURN_QUANTITY";
+
     private int fromWhatScreen;
     public static String FROM_WHAT_SCREEN = "FROM_WHAT_SCREEN";
     public static final int SCREEN_ADD_FOOD_ITEMS = 1;
