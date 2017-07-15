@@ -2,7 +2,7 @@ package com.mmeh.peal.model;
 
 import java.util.ArrayList;
 
-public class FoodRecipe {
+public class FoodRecipe extends DataBaseModel{
 
     private String recipeName;
     private ArrayList<FoodItem> foodItems;
@@ -11,7 +11,7 @@ public class FoodRecipe {
     private float recipeQuantity;
 
 
-    public FoodRecipe() {
+    public FoodRecipe(){
         recipeName = "";
         recipeInstructions = "";
         recipeServingSize = (float) 1;

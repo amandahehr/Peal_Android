@@ -161,6 +161,7 @@
         android:layout_alignLeft="@+id/meal_type_text_view"
         android:layout_alignStart="@+id/meal_type_text_view"
         android:textColor="@color/lightGreen"
+        android:onClick="confirmButtonClickEventHandler"
         android:background="@color/toolbarColor"/>
 
     <Button
@@ -173,6 +174,7 @@
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
         android:text="Cancel"
+        android:onClick="cancelButtonClickEventHandler"
         android:textColor="@color/lightGreen"
         android:background="@color/toolbarColor"/>
 

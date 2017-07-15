@@ -171,7 +171,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.delete(FoodRecipeItemEntry.TABLE_NAME, FoodRecipeItemEntry.COLUMN_NAME_FOOD_RECIPE_ID + "=" + foodRecipeId, null);
         return db.delete(FoodRecipeEntry.TABLE_NAME, FoodRecipeEntry._ID + "=" + foodRecipeId, null);
     }
-    
+
+    public void deleteMealDayTypeItemByMealDayTypeId(long mealDayTypeId) {
+        String selection = MealDayTypeItemEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID + " = ?";
+        String [] selectionArgs = { String.valueOf(mealDayTypeId) };
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MealDayTypeItemEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
+    public void deleteMealDayTypeRecipeByMealDayTypeId(long mealDayTypeId) {
+        String selection = MealDayTypeRecipeEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID + " = ?";
+        String [] selectionArgs = { String.valueOf(mealDayTypeId) };
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(MealDayTypeRecipeEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
     public long insertNewFoodRecipeItem(long foodRecipeId, long foodItemId, float quantity) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -472,8 +488,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         );
 
         while (cursor.moveToNext()) {
-            FoodRecipe newFoodRecipe = getFoodRecipeById((int) cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeRecipeEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID)));
+            FoodRecipe newFoodRecipe = getFoodRecipeById((int) cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeRecipeEntry.COLUMN_NAME_FOOD_RECIPE_ID)));
             newFoodRecipe.setRecipeQuantity(cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeRecipeEntry.COLUMN_NAME_QUANTITY)));
+            newFoodRecipe.setDbId(cursor.getLong(cursor.getColumnIndexOrThrow(MealDayTypeRecipeEntry.COLUMN_NAME_FOOD_RECIPE_ID)));
             foodRecipes.add(newFoodRecipe);
         }
         cursor.close();
@@ -518,5 +535,55 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
         return meal;
+    }
+
+    public long insertNewMealDay(String mealDate) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(MealDayEntry.COLUMN_NAME_MEAL_DATE, mealDate);
+
+        return db.insert(MealDayEntry.TABLE_NAME, null, values);
+    }
+
+    public long insertNewMealDayType(int mealDayId, String mealType) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(MealDayTypeEntry.COLUMN_NAME_MEAL_DAY_ID, mealDayId);
+        values.put(MealDayTypeEntry.COLUMN_NAME_MEAL_DAY_TYPE, mealType);
+
+        return db.insert(MealDayTypeEntry.TABLE_NAME, null, values);
+    }
+
+    public void insertNewMealDayTypeItem(long mealDayTypeId, ArrayList<FoodItem> foodItems) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        for (FoodItem fi : foodItems) {
+            long foodItemId = getFoodItemIdByNDB(fi.getItemNDB());
+            if (foodItemId == 0) {
+                foodItemId = insertNewFoodItem(fi);
+            }
+
+            ContentValues values = new ContentValues();
+            values.put(MealDayTypeItemEntry.COLUMN_NAME_FOOD_ITEM_ID, foodItemId);
+            values.put(MealDayTypeItemEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID, mealDayTypeId);
+            values.put(MealDayTypeItemEntry.COLUMN_NAME_QUANTITY, fi.getItemQuantity());
+
+            db.insert(MealDayTypeItemEntry.TABLE_NAME, null, values);
+        }
+    }
+
+    public void insertNewMealDayTypeRecipe(long mealDayTypeId, ArrayList<FoodRecipe> foodRecipes) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        for (FoodRecipe fr : foodRecipes) {
+            ContentValues values = new ContentValues();
+            values.put(MealDayTypeRecipeEntry.COLUMN_NAME_FOOD_RECIPE_ID, fr.getDbId());
+            values.put(MealDayTypeRecipeEntry.COLUMN_NAME_MEAL_DAY_TYPE_ID, mealDayTypeId);
+            values.put(MealDayTypeRecipeEntry.COLUMN_NAME_QUANTITY, fr.getRecipeQuantity());
+
+            db.insert(MealDayTypeRecipeEntry.TABLE_NAME, null, values);
+        }
     }
 }

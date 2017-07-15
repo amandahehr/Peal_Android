@@ -2,7 +2,7 @@ package com.mmeh.peal.model;
 
 import java.util.ArrayList;
 
-public class Meal {
+public class Meal{
 
     private String mealType;
     private ArrayList<FoodRecipe> foodRecipes;

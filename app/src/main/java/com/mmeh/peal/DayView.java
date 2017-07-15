@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -34,6 +35,8 @@ public class DayView extends AppCompatActivity {
     private MealItemListAdapter breakfastAdapter, lunchAdapter, dinnerAdapter;
     private List<String> breakfastItems, lunchItems, dinnerItems;
     private int breakfastMealDayTypeId, lunchMealDayTypeId, dinnerMealDayTypeId;
+    private int mealDayId;
+    private String fullDate;
 
     // UI
     private ListView breakfastListView, lunchListView, dinnerListView;
@@ -76,12 +79,13 @@ public class DayView extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String month = bundle.getString("Month");
         String day = bundle.getString("Day");
-        String fullDate = bundle.getString(IN_DATE);
+        fullDate = bundle.getString(IN_DATE);
         myDbHelper = new DataBaseHelper(this);
         myMealPlan = new MealPlan(fullDate);
         breakfastItems = new ArrayList<>();
         lunchItems = new ArrayList<>();
         dinnerItems = new ArrayList<>();
+        mealDayId = (int) myDbHelper.getMealDayIdByDate(fullDate);
         breakfastAdapter = new MealItemListAdapter(this, R.layout.list_item_meal, breakfastItems);
         lunchAdapter = new MealItemListAdapter(this, R.layout.list_item_meal, lunchItems);
         dinnerAdapter = new MealItemListAdapter(this, R.layout.list_item_meal, dinnerItems);
@@ -116,7 +120,24 @@ public class DayView extends AppCompatActivity {
         switch (requestCode) {
             case MEAL_VIEW_REQUEST:
                 if (resultCode == RESULT_OK) {
-
+                    Log.d("WTM", "voltou");
+                    try {
+                        mealDayId = data.getIntExtra(MealView.RETURN_MEAL_DAY_ID, 0);
+                    } catch (Exception e) {
+                        Log.d("WTM", e.getMessage());
+                    }
+                    String returnMealType = data.getStringExtra(MealView.RETURN_MEAL_TYPE);
+                    if (returnMealType.equals(myMealPlan.BREAKFAST)) {
+                        breakfastMealDayTypeId = data.getIntExtra(MealView.RETURN_MEAL_DAY_TYPE_ID, 0);
+                        myMealPlan.setBreakfastMeal(myDbHelper.getMealByDateType(fullDate, myMealPlan.BREAKFAST));
+                    } else if (returnMealType.equals(myMealPlan.LUNCH)) {
+                        lunchMealDayTypeId = data.getIntExtra(MealView.RETURN_MEAL_DAY_TYPE_ID, 0);
+                        myMealPlan.setLunchMeal(myDbHelper.getMealByDateType(fullDate, myMealPlan.LUNCH));
+                    } else {
+                        dinnerMealDayTypeId = data.getIntExtra(MealView.RETURN_MEAL_DAY_TYPE_ID, 0);
+                        myMealPlan.setDinnerMeal(myDbHelper.getMealByDateType(fullDate, myMealPlan.DINNER));
+                    }
+                    updateAdapters();
                 }
                 break;
             default:
@@ -165,19 +186,28 @@ public class DayView extends AppCompatActivity {
 
     public void viewBreakfastClickEventHandler(View view) {
         Intent intent = new Intent(view.getContext(), MealView.class);
+        intent.putExtra(MealView.IN_MEAL_DAY_ID, mealDayId);
+        intent.putExtra(MealView.IN_DATE, fullDate);
         intent.putExtra(MealView.IN_MEAL_DAY_TYPE_ID, breakfastMealDayTypeId);
+        intent.putExtra(MealView.IN_MEAL_TYPE, myMealPlan.BREAKFAST);
         startActivityForResult(intent, MEAL_VIEW_REQUEST);
     }
 
     public void viewLunchClickEventListener(View view) {
         Intent intent = new Intent(view.getContext(), MealView.class);
+        intent.putExtra(MealView.IN_MEAL_DAY_ID, mealDayId);
+        intent.putExtra(MealView.IN_DATE, fullDate);
         intent.putExtra(MealView.IN_MEAL_DAY_TYPE_ID, lunchMealDayTypeId);
+        intent.putExtra(MealView.IN_MEAL_TYPE, myMealPlan.LUNCH);
         startActivityForResult(intent, MEAL_VIEW_REQUEST);
     }
 
     public void viewDinnerClickEventListener(View view) {
         Intent intent = new Intent(view.getContext(), MealView.class);
+        intent.putExtra(MealView.IN_MEAL_DAY_ID, mealDayId);
+        intent.putExtra(MealView.IN_DATE, fullDate);
         intent.putExtra(MealView.IN_MEAL_DAY_TYPE_ID, dinnerMealDayTypeId);
+        intent.putExtra(MealView.IN_MEAL_TYPE, myMealPlan.DINNER);
         startActivityForResult(intent, MEAL_VIEW_REQUEST);
     }
 }
