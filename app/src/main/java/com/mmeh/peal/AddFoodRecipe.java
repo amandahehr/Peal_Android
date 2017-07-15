@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,6 +92,8 @@ public class AddFoodRecipe extends AppCompatActivity {
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
 //        setSupportActionBar(toolbar);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
         // initialization of attributes and variables
