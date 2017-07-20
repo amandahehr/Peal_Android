@@ -137,9 +137,14 @@ public class AddFoodRecipe extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (foodRecipeId == 0) { // new food recipe
-                    saveRecipe();
-                    setResult(RESULT_OK);
-                    finish();
+                    if (foodRecipeNameEditText.getText().toString().trim().equals("")) {
+                        foodRecipeNameEditText.requestFocus();
+                        Toast.makeText(view.getContext(), "Please insert a name for the recipe", Toast.LENGTH_SHORT).show();
+                    } else {
+                        saveRecipe();
+                        setResult(RESULT_OK);
+                        finish();
+                    }
                 } else {
                     if (recipeEditable) {
                         // TODO: code delete entire recipe by foodRecipeId and save recipe and finish activity with return
@@ -231,12 +236,6 @@ public class AddFoodRecipe extends AppCompatActivity {
     }
 
     private void saveRecipe() {
-        if (foodRecipeNameEditText.getText().toString().trim().equals("")) {
-            foodRecipeNameEditText.requestFocus();
-            Toast.makeText(AddFoodRecipe.this, "Please insert a name for the recipe", Toast.LENGTH_SHORT);
-            return;
-        }
-
         foodRecipe.setRecipeName(foodRecipeNameEditText.getText().toString());
         foodRecipe.setRecipeInstructions(foodRecipeInstructionsEditText.getText().toString());
         ArrayList<FoodItem> foodItems = new ArrayList<>();
