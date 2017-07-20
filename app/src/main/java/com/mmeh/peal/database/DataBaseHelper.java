@@ -338,6 +338,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         String[] projection = {
+                FoodRecipeEntry._ID,
                 FoodRecipeEntry.COLUMN_NAME_NAME
         };
         String selection = FoodRecipeEntry.COLUMN_NAME_NAME + " LIKE ?";
@@ -355,6 +356,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
             FoodRecipe fr = new FoodRecipe();
+            fr.setDbId(cursor.getLong(cursor.getColumnIndexOrThrow(FoodRecipeEntry._ID)));
             fr.setRecipeName(cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeEntry.COLUMN_NAME_NAME)));
             foodRecipes.add(fr);
         }

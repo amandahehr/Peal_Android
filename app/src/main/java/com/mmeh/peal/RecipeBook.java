@@ -168,7 +168,7 @@ public class RecipeBook extends AppCompatActivity {
 
     private void returnToMealView(float quantity) {
         Intent data = new Intent();
-        data.putExtra(RETURN_RECIPE_ID, recipesId.get(foodRecipes.get(chosenItem)));
+        data.putExtra(RETURN_RECIPE_ID, foodRecipes.get(chosenItem).getDbId());
         data.putExtra(RETURN_RECIPE_NAME, foodRecipes.get(chosenItem).getRecipeName());
         data.putExtra(RETURN_RECIPE_SERVING_SIZE, foodRecipes.get(chosenItem).getRecipeServingSize());
         data.putExtra(RETURN_RECIPE_QUANTITY, quantity);
@@ -205,6 +205,7 @@ public class RecipeBook extends AppCompatActivity {
             String itemName = cursor.getString(cursor.getColumnIndexOrThrow(FoodRecipeContract.FoodRecipeEntry.COLUMN_NAME_NAME));
 
             FoodRecipe fr = new FoodRecipe(itemName, null, "");
+            fr.setDbId(itemId);
             foodRecipes.add(fr);
             recipesId.put(fr, itemId);
         }

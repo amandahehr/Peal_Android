@@ -158,7 +158,7 @@ public class MealView extends AppCompatActivity {
                     fr.setRecipeName(data.getStringExtra(RecipeBook.RETURN_RECIPE_NAME));
                     fr.setRecipeQuantity(data.getFloatExtra(RecipeBook.RETURN_RECIPE_QUANTITY, 0));
                     fr.setRecipeServingSize(data.getFloatExtra(RecipeBook.RETURN_RECIPE_SERVING_SIZE, 0));
-                    fr.setDbId(data.getIntExtra(RecipeBook.RETURN_RECIPE_ID, 0));
+                    fr.setDbId(data.getLongExtra(RecipeBook.RETURN_RECIPE_ID, 0));
                     myMeal.addFoodRecipe(fr);
                     updateFoodRecipeList();
                 }
