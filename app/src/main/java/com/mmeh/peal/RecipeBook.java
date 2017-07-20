@@ -120,6 +120,7 @@ public class RecipeBook extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // if you came from the MealView then you want to add a recipe, not just looking/creating one
                 if (fromWhatScreen == SCREEN_MEAL_VIEW) {
+                    chosenItem = position;
                     Intent intent = new Intent(view.getContext(), SingleItem.class);
                     intent.putExtra(SingleItem.FROM_WHAT_SCREEN, SingleItem.SCREEN_RECIPE_BOOK);
                     intent.putExtra(SingleItem.ITEM_NAME, foodRecipes.get(position).getRecipeName());
@@ -128,7 +129,6 @@ public class RecipeBook extends AppCompatActivity {
                     startActivityForResult(intent, SINGLE_ITEM_REQUEST);
 
                 } else {
-                    chosenItem = position;
                     Intent intent = new Intent(view.getContext(), AddFoodRecipe.class);
                     intent.putExtra(AddFoodRecipe.FOOD_RECIPE_ID, recipesId.get(foodRecipes.get(position)));
                     startActivityForResult(intent, NEW_FOOD_RECIPE_REQUEST);

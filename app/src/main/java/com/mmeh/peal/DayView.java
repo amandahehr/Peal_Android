@@ -123,11 +123,10 @@ public class DayView extends AppCompatActivity {
         switch (requestCode) {
             case MEAL_VIEW_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    Log.d("WTM", "voltou");
                     try {
                         mealDayId = data.getIntExtra(MealView.RETURN_MEAL_DAY_ID, 0);
                     } catch (Exception e) {
-                        Log.d("WTM", e.getMessage());
+
                     }
                     String returnMealType = data.getStringExtra(MealView.RETURN_MEAL_TYPE);
                     if (returnMealType.equals(myMealPlan.BREAKFAST)) {

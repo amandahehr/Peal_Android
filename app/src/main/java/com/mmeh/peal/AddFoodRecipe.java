@@ -5,19 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mmeh.peal.database.DataBaseHelper;
@@ -237,6 +231,12 @@ public class AddFoodRecipe extends AppCompatActivity {
     }
 
     private void saveRecipe() {
+        if (foodRecipeNameEditText.getText().toString().trim().equals("")) {
+            foodRecipeNameEditText.requestFocus();
+            Toast.makeText(AddFoodRecipe.this, "Please insert a name for the recipe", Toast.LENGTH_SHORT);
+            return;
+        }
+
         foodRecipe.setRecipeName(foodRecipeNameEditText.getText().toString());
         foodRecipe.setRecipeInstructions(foodRecipeInstructionsEditText.getText().toString());
         ArrayList<FoodItem> foodItems = new ArrayList<>();
